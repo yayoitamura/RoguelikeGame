@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - floor
+  - item
+  - enemy
+  - player
   layers:
   - Default
   - TransparentFX
@@ -13,10 +17,10 @@ TagManager:
   - UI
   - 
   - 
+  - floor
+  - item
   - 
-  - 
-  - 
-  - 
+  - Character
   - 
   - 
   - 
@@ -40,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: floor
+    uniqueID: 1224128935
+    locked: 0
+  - name: item
+    uniqueID: 2847834795
+    locked: 0
+  - name: character
+    uniqueID: 275247613
     locked: 0
