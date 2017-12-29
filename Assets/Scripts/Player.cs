@@ -25,22 +25,18 @@ public class Player : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKey ("left")) {
-			animator.SetTrigger ("left");
 			key = InputKey.Left;
 			position.x -= SPEED.x;
 
 		} else if (Input.GetKey ("up")) {
-			animator.SetTrigger ("up");
 			key = InputKey.Up;
 			position.y += SPEED.y;
 
 		} else if (Input.GetKey ("right")) {
-			animator.SetTrigger ("right");
 			key = InputKey.Right;
 			position.x += SPEED.x;
 
 		} else if (Input.GetKey ("down")) {
-			animator.SetTrigger ("down");
 			key = InputKey.Down;
 			position.y -= SPEED.y;
 		}
@@ -49,27 +45,18 @@ public class Player : MonoBehaviour {
 
 		switch (key) {
 			case InputKey.Left:
-				// animator.SetTrigger ("left");
-				Debug.Log ("state  left");
 
 				break;
 			case InputKey.Up:
-				// animator.SetTrigger ("up");
-				Debug.Log ("state  up");
 
 				break;
 			case InputKey.Right:
-				// animator.SetTrigger ("right");
-				Debug.Log ("state  right");
 
 				break;
 			case InputKey.Down:
-				// animator.SetTrigger ("down");
-				Debug.Log ("state  down");
 
 				break;
 		}
-		Debug.Log ("key  ======  " + key);
 
 	}
 }
