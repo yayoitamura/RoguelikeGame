@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	Animator animator;
 	Vector2 position;
-	public Vector2 SPEED = new Vector2 (0.05f, 0.05f);
+	private const int STEP = 1;
 
 	public enum InputKey {
 		Left, // 左
@@ -18,27 +17,26 @@ public class Player : MonoBehaviour {
 		public InputKey key = InputKey.Empty;
 
 		void Start () {
-		animator = GetComponent<Animator> ();
 		position = transform.position;
 	}
 
 	void Update () {
 
-		if (Input.GetKey ("left")) {
+		if (Input.GetKeyDown ("left")) {
 			key = InputKey.Left;
-			position.x -= SPEED.x;
+			position.x -= STEP;
 
-		} else if (Input.GetKey ("up")) {
+		} else if (Input.GetKeyDown ("up")) {
 			key = InputKey.Up;
-			position.y += SPEED.y;
+			position.y += STEP;
 
-		} else if (Input.GetKey ("right")) {
+		} else if (Input.GetKeyDown ("right")) {
 			key = InputKey.Right;
-			position.x += SPEED.x;
+			position.x += STEP;
 
-		} else if (Input.GetKey ("down")) {
+		} else if (Input.GetKeyDown ("down")) {
 			key = InputKey.Down;
-			position.y -= SPEED.y;
+			position.y -= STEP;
 		}
 
 		transform.position = position;
@@ -57,6 +55,10 @@ public class Player : MonoBehaviour {
 
 				break;
 		}
-
 	}
+
+	void OnCollisionEnter2D (Collision2D other) {
+		Debug.Log (other);
+	}
+
 }
