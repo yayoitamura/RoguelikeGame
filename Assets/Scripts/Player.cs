@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	Vector2 position;
+	Vector2 currentPosition;
 	private const int STEP = 1;
+	private const float HEIGH = 6.5f;
+	private const float WIDTH = 5.5f;
 
 	public enum InputKey {
 		Left, // 左
@@ -17,29 +19,12 @@ public class Player : MonoBehaviour {
 		public InputKey key = InputKey.Empty;
 
 		void Start () {
-		position = transform.position;
+		currentPosition = transform.position;
 	}
 
 	void Update () {
 
-		if (Input.GetKeyDown ("left")) {
-			key = InputKey.Left;
-			position.x -= STEP;
-
-		} else if (Input.GetKeyDown ("up")) {
-			key = InputKey.Up;
-			position.y += STEP;
-
-		} else if (Input.GetKeyDown ("right")) {
-			key = InputKey.Right;
-			position.x += STEP;
-
-		} else if (Input.GetKeyDown ("down")) {
-			key = InputKey.Down;
-			position.y -= STEP;
-		}
-
-		transform.position = position;
+		Move ();
 
 		switch (key) {
 			case InputKey.Left:
@@ -57,8 +42,38 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	void Move () {
+		if (Input.GetKeyDown ("left")) {
+			key = InputKey.Left;
+			currentPosition.x = Mathf.Clamp (transform.position.x - STEP, -HEIGH, HEIGH);
+
+		} else if (Input.GetKeyDown ("up")) {
+			key = InputKey.Up;
+			currentPosition.y = Mathf.Clamp (transform.position.y + STEP, -WIDTH, WIDTH);
+
+		} else if (Input.GetKeyDown ("right")) {
+			key = InputKey.Right;
+			currentPosition.x = Mathf.Clamp (transform.position.x + STEP, -HEIGH, HEIGH);
+
+		} else if (Input.GetKeyDown ("down")) {
+			key = InputKey.Down;
+			currentPosition.y = Mathf.Clamp (transform.position.y - STEP, -WIDTH, WIDTH);
+		}
+
+		Ray ray = new Ray (currentPosition, transform.forward);
+		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
+		if (hit.collider) {
+			if (hit.collider.gameObject.name == "Enemy") {
+				Debug.Log ("Enemy hit!!!!!!!!!!!!!!!!!!!!!");
+				currentPosition = transform.position;
+			}
+		}
+
+		transform.position = currentPosition;
+	}
+
 	void OnCollisionEnter2D (Collision2D other) {
-		Debug.Log (other);
+		Debug.Log (other.gameObject.tag);
 	}
 
 }
