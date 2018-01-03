@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 
-		Move ();
+		KeyInput ();
 
 		switch (key) {
 			case InputKey.Left:
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void Move () {
+	void KeyInput () {
 		if (Input.GetKeyDown ("left")) {
 			key = InputKey.Left;
 			currentPosition.x = Mathf.Clamp (transform.position.x - STEP, -HEIGH, HEIGH);
@@ -63,17 +63,25 @@ public class Player : MonoBehaviour {
 		Ray ray = new Ray (currentPosition, transform.forward);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
 		if (hit.collider) {
-			if (hit.collider.gameObject.name == "Enemy") {
-				Debug.Log ("Enemy hit!!!!!!!!!!!!!!!!!!!!!");
-				currentPosition = transform.position;
-			}
+			currentPosition = transform.position;
+			CantMove (hit);
 		}
 
 		transform.position = currentPosition;
 	}
 
+	void CantMove (RaycastHit2D hit) {
+		if (hit.collider.gameObject.name == "Enemy") {
+			Debug.Log ("Enemy hit!!!!!!!!!!!!!!!!!!!!!");
+		}
+		if (hit.collider.gameObject.name == "crate") {
+			Debug.Log ("crate hit!!!!!!!!!!!!!!!!!!!!!");
+		}
+
+	}
+
 	void OnCollisionEnter2D (Collision2D other) {
-		Debug.Log (other.gameObject.tag);
+		Debug.Log ("On Collision == " + other.gameObject.tag);
 	}
 
 }
