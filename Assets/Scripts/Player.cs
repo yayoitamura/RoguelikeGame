@@ -3,71 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+
 	Vector2 currentPosition;
 	private const int STEP = 1;
 	private const float HEIGH = 6.5f;
 	private const float WIDTH = 5.5f;
+	private float speed = 5.0f;
+	Vector2 mousePosition;
 
-	public enum InputKey {
-		Left, // 左
-		Up, // 上
-		Right, // 右
-		Down, // 下
-
-		Empty,
-		};
-		public InputKey key = InputKey.Empty;
-
-		void Start () {
-		currentPosition = transform.position;
-	}
+	void Start () { }
 
 	void Update () {
 
-		KeyInput ();
+		if (Input.GetMouseButton (0)) {
+			mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			float step = speed * Time.deltaTime;
 
-		switch (key) {
-			case InputKey.Left:
+			Ray ray = new Ray (mousePosition, transform.forward);
+			RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
+			if (hit.collider) {
+				mousePosition = transform.position;
+				CantMove (hit);
+			}
 
-				break;
-			case InputKey.Up:
-
-				break;
-			case InputKey.Right:
-
-				break;
-			case InputKey.Down:
-
-				break;
-		}
-	}
-
-	void KeyInput () {
-		if (Input.GetKeyDown ("left")) {
-			key = InputKey.Left;
-			currentPosition.x = Mathf.Clamp (transform.position.x - STEP, -HEIGH, HEIGH);
-
-		} else if (Input.GetKeyDown ("up")) {
-			key = InputKey.Up;
-			currentPosition.y = Mathf.Clamp (transform.position.y + STEP, -WIDTH, WIDTH);
-
-		} else if (Input.GetKeyDown ("right")) {
-			key = InputKey.Right;
-			currentPosition.x = Mathf.Clamp (transform.position.x + STEP, -HEIGH, HEIGH);
-
-		} else if (Input.GetKeyDown ("down")) {
-			key = InputKey.Down;
-			currentPosition.y = Mathf.Clamp (transform.position.y - STEP, -WIDTH, WIDTH);
+			transform.position = Vector2.MoveTowards (transform.position, new Vector2 (mousePosition.x, mousePosition.y), step);
 		}
 
-		Ray ray = new Ray (currentPosition, transform.forward);
-		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
-		if (hit.collider) {
-			currentPosition = transform.position;
-			CantMove (hit);
-		}
-
-		transform.position = currentPosition;
 	}
 
 	void CantMove (RaycastHit2D hit) {
