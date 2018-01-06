@@ -452,14 +452,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 649636060}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a72b36c8bcb4c458b96f1b7a10e4cc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 832553587}
-  y: 5
-  z: -10
 --- !u!1 &832553587 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1117828564107068, guid: 89174ecf6979345adaca6dec59bf5ed8,
