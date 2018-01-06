@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	private float speed = 5.0f;
-	Vector2 mousePosition;
-	public DungeonGenerator generator;
-	[SerializeField]
-	GameObject wallPrefab;
-	[SerializeField]
-	GameObject floorPrefab;
-	[SerializeField]
-	Transform tileContainer;
+	[SerializeField] GameObject wallPrefab;
+	[SerializeField] GameObject floorPrefab;
+	[SerializeField] Transform tileContainer;
 
+	DungeonGenerator generator;
 	CameraControl cameraControl;
 
+	float step = 5f;
+	Vector3 target;
+	Animator animator;
+
 	void Start () {
+		target = transform.position;
 
 		cameraControl = GameObject.Find ("Main Camera").GetComponent<CameraControl> ();
+		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
+		animator = GetComponent<Animator> ();
 
 		var map = generator.Generate ();
-
 		// マップを元にオブジェクト生成
 		for (var x = 0; x < generator.width; x++) {
 			for (var y = 0; y < generator.height; y++) {
-				Debug.Log ("-----------");
 				var tile = map[x, y] == 1 ? Instantiate (floorPrefab) : Instantiate (wallPrefab);
 				tile.transform.SetParent (tileContainer);
 				tile.transform.localPosition = new Vector2 (x, y);
@@ -34,27 +34,35 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if (transform.position.x == target.x || transform.position.y == target.y) {
+			SetTargetPosition ();
+		}
 		Move ();
 	}
-	
+
+	void SetTargetPosition () {
+		if (Input.GetMouseButtonUp (0)) {
+			target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			// SetAnimationParam (0);
+			return;
+		}
+
+	}
 
 	void Move () {
-		if (Input.GetMouseButton (0)) {
-			mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			float step = speed * Time.deltaTime;
-			cameraControl.Move ();
+		cameraControl.Move ();
 
-			Ray ray = new Ray (mousePosition, transform.forward);
-			RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
+		Ray ray = new Ray (target, transform.forward);
+		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
 
-			if (hit.collider) {
-				mousePosition = transform.position;
-				CantMove (hit);
+		if (hit.collider) {
+			target = transform.position;
+			CantMove (hit);
 
-			}
-
-			transform.position = Vector2.MoveTowards (transform.position, new Vector2 (mousePosition.x, mousePosition.y), step);
 		}
+
+		transform.position = Vector2.MoveTowards (transform.position, new Vector2 (target.x, target.y), step * Time.deltaTime);
 	}
 
 	void CantMove (RaycastHit2D hit) {
