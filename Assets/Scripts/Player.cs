@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -44,10 +45,36 @@ public class Player : MonoBehaviour {
 	void SetTargetPosition () {
 		if (Input.GetMouseButtonUp (0)) {
 			target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			// SetAnimationParam (0);
+			SetAnimationParam (target);
 			return;
 		}
 
+	}
+
+	// WalkParam  0;下移動　1;右移動　2:左移動　3:上移動
+	void SetAnimationParam (Vector3 position) {
+
+		bool upDown = Mathf.Abs (target.x - transform.position.x) > Mathf.Abs (target.y - transform.position.y);
+
+		if (target.x - transform.position.x <= 0 && upDown) {
+			animator.Play ("chaLeft");
+			return;
+		}
+
+		if (target.x - transform.position.x >= 0 && upDown) {
+			animator.Play ("chaRight");
+			return;
+		}
+
+		if (target.y - transform.position.y <= 0 && !upDown) {
+			animator.Play ("chaDown");
+			return;
+		}
+
+		if (target.y - transform.position.y >= 0 && !upDown) {
+			animator.Play ("chaUp");
+			return;
+		}
 	}
 
 	void Move () {
@@ -76,7 +103,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
-		Debug.Log ("On Collision == " + other.gameObject.tag);
+		// Debug.Log ("On Collision == " + other.gameObject.tag);
 	}
 
 }
