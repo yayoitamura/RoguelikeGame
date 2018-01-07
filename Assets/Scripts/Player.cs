@@ -12,12 +12,13 @@ public class Player : MonoBehaviour {
 	DungeonGenerator generator;
 	CameraControl cameraControl;
 
-	float step = 5f;
-	Vector3 target;
 	Animator animator;
+	const float STEP = 0.5f;
+	Vector2 movePosition;
 
 	void Start () {
-		target = transform.position;
+
+		movePosition = transform.position;
 
 		cameraControl = GameObject.Find ("Main Camera").GetComponent<CameraControl> ();
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
@@ -34,76 +35,85 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void Update () {
+	public void SetTargetPosition (string key) {
 
-		if (transform.position.x == target.x || transform.position.y == target.y) {
-			SetTargetPosition ();
+		switch (key) {
+			case "left":
+				// animator.SetTrigger ("left");
+				movePosition.x -= STEP;
+				Debug.Log ("state  left");
+				break;
+			case "up":
+				// animator.SetTrigger ("up");
+				movePosition.y += STEP;
+				Debug.Log ("state  up");
+				break;
+			case "right":
+				// animator.SetTrigger ("right");
+				movePosition.x += STEP;
+				Debug.Log ("state  right");
+				break;
+			case "down":
+				// animator.SetTrigger ("down");
+				movePosition.y -= STEP;
+				Debug.Log ("state  down");
+				break;
 		}
+
+		SetAnimationParam (key);
 		Move ();
 	}
 
-	void SetTargetPosition () {
-		if (Input.GetMouseButtonUp (0)) {
-			target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			SetAnimationParam (target);
-			return;
-		}
+	void SetAnimationParam (string key) {
 
-	}
-
-	// WalkParam  0;下移動　1;右移動　2:左移動　3:上移動
-	void SetAnimationParam (Vector3 position) {
-
-		bool upDown = Mathf.Abs (target.x - transform.position.x) > Mathf.Abs (target.y - transform.position.y);
-
-		if (target.x - transform.position.x <= 0 && upDown) {
+		if (key == "left") {
 			animator.Play ("chaLeft");
 			return;
 		}
 
-		if (target.x - transform.position.x >= 0 && upDown) {
+		if (key == "right") {
 			animator.Play ("chaRight");
 			return;
 		}
 
-		if (target.y - transform.position.y <= 0 && !upDown) {
+		if (key == "down") {
 			animator.Play ("chaDown");
 			return;
 		}
 
-		if (target.y - transform.position.y >= 0 && !upDown) {
+		if (key == "up") {
 			animator.Play ("chaUp");
 			return;
 		}
 	}
 
 	void Move () {
+
 		cameraControl.Move ();
 
-		Ray ray = new Ray (target, transform.forward);
+		Ray ray = new Ray (movePosition, transform.forward);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
 
 		if (hit.collider) {
-			target = transform.position;
+			movePosition = transform.position;
 			CantMove (hit);
-
+		} else {
+			transform.position = movePosition;
 		}
-
-		transform.position = Vector2.MoveTowards (transform.position, new Vector2 (target.x, target.y), step * Time.deltaTime);
 	}
 
 	void CantMove (RaycastHit2D hit) {
-		if (hit.collider.gameObject.name == "Enemy") {
-			Debug.Log ("Enemy hit!!!!!!!!!!!!!!!!!!!!!");
-		}
-		if (hit.collider.gameObject.name == "crate") {
-			Debug.Log ("crate hit!!!!!!!!!!!!!!!!!!!!!");
-		}
+
+		if (hit.collider.gameObject.name == "Enemy") { }
+
+		if (hit.collider.gameObject.tag == "wall") { }
 
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
-		// Debug.Log ("On Collision == " + other.gameObject.tag);
+
+		Debug.Log ("On Collision == " + other.gameObject.tag);
+		movePosition = transform.position;
 	}
 
 }
