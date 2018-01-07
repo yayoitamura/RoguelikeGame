@@ -27,4 +27,7 @@ public class GameManager : MonoBehaviour {
 
 	void Update () { }
 
+	public void LoadScenes (int index) {
+		SceneManager.LoadScene (index);
+	}
 }

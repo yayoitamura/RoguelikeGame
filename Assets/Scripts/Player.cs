@@ -91,7 +91,10 @@ public class Player : MonoBehaviour {
 
 		if (hit.collider.gameObject.tag == "wall") { }
 
-		if (hit.collider.gameObject.tag == "steps") { }
+		if (hit.collider.gameObject.tag == "steps") {
+			int nextStage = 0;
+			gameManager.LoadScenes (nextStage);
+		}
 
 	}
 
