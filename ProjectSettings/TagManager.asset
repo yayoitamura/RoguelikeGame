@@ -5,10 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - floor
-  - item
   - enemy
   - player
   - wall
+  - steps
+  - item
   layers:
   - Default
   - TransparentFX

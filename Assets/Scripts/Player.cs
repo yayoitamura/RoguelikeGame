@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	[SerializeField] GameObject wallPrefab;
-	[SerializeField] GameObject floorPrefab;
-	[SerializeField] Transform tileContainer;
-
-	DungeonGenerator generator;
 	CameraControl cameraControl;
+	GameManager gameManager;
 
 	Animator animator;
 	const float STEP = 0.5f;
@@ -21,40 +17,27 @@ public class Player : MonoBehaviour {
 		movePosition = transform.position;
 
 		cameraControl = GameObject.Find ("Main Camera").GetComponent<CameraControl> ();
-		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
-		animator = GetComponent<Animator> ();
+		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 
-		var map = generator.Generate ();
-		// マップを元にオブジェクト生成
-		for (var x = 0; x < generator.width; x++) {
-			for (var y = 0; y < generator.height; y++) {
-				var tile = map[x, y] == 1 ? Instantiate (floorPrefab) : Instantiate (wallPrefab);
-				tile.transform.SetParent (tileContainer);
-				tile.transform.localPosition = new Vector2 (x, y);
-			}
-		}
+		animator = GetComponent<Animator> ();
 	}
 
 	public void SetTargetPosition (string key) {
 
 		switch (key) {
 			case "left":
-				// animator.SetTrigger ("left");
 				movePosition.x -= STEP;
 				Debug.Log ("state  left");
 				break;
 			case "up":
-				// animator.SetTrigger ("up");
 				movePosition.y += STEP;
 				Debug.Log ("state  up");
 				break;
 			case "right":
-				// animator.SetTrigger ("right");
 				movePosition.x += STEP;
 				Debug.Log ("state  right");
 				break;
 			case "down":
-				// animator.SetTrigger ("down");
 				movePosition.y -= STEP;
 				Debug.Log ("state  down");
 				break;
@@ -104,9 +87,11 @@ public class Player : MonoBehaviour {
 
 	void CantMove (RaycastHit2D hit) {
 
-		if (hit.collider.gameObject.name == "Enemy") { }
+		if (hit.collider.gameObject.tag == "enemy") { }
 
 		if (hit.collider.gameObject.tag == "wall") { }
+
+		if (hit.collider.gameObject.tag == "steps") { }
 
 	}
 
