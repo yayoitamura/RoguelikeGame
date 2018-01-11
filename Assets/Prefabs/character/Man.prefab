@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 212770816689832654}
   - component: {fileID: 50873523680902006}
   - component: {fileID: 61693370681099512}
-  - component: {fileID: 114489442840337678}
+  - component: {fileID: 95490079469292346}
+  - component: {fileID: 114502514434808962}
   m_Layer: 11
   m_Name: Man
   m_TagString: player
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1117828564107068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,7 +89,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8888889, y: 0.8888889}
   m_EdgeRadius: 0
---- !u!114 &114489442840337678
+--- !u!95 &95490079469292346
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117828564107068}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03737107643c442a4afe35c02a3ac8b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114502514434808962
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -99,10 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7565ec1765a54427a7cc12d907d28ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 1129635029449754, guid: 38484ac236f2c4914b72b7a3c29d111f, type: 2}
-  floorPrefab: {fileID: 1563108272266990, guid: 6f05806d55df9472cb3b4c65052e0473,
-    type: 2}
-  tileContainer: {fileID: 0}
+  _longPressTime: 1
+  _invokeInterval: 0.2
 --- !u!212 &212770816689832654
 SpriteRenderer:
   m_ObjectHideFlags: 1
