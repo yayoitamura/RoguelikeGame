@@ -1085,6 +1085,12 @@ Prefab:
       propertyPath: _invokeInterval
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8,
+        type: 2}
+      propertyPath: wall
+      value: 
+      objectReference: {fileID: 114693881746931944, guid: 38484ac236f2c4914b72b7a3c29d111f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   m_IsPrefabParent: 0
@@ -1752,8 +1758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f82592197fb45f89b3eb2fc064eac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 1507360964479502, guid: 68a6fd7f79e0244ac98755e970f14ccf, type: 2}
-  floorPrefab: {fileID: 1237492480351324, guid: 056c0e9562934468799099105cec66cd,
+  wallPrefab: {fileID: 1129635029449754, guid: 38484ac236f2c4914b72b7a3c29d111f, type: 2}
+  floorPrefab: {fileID: 1563108272266990, guid: 6f05806d55df9472cb3b4c65052e0473,
     type: 2}
   tileContainer: {fileID: 1932000768}
 --- !u!4 &1736672854
