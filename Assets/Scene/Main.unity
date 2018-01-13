@@ -1091,6 +1091,12 @@ Prefab:
       value: 
       objectReference: {fileID: 114693881746931944, guid: 38484ac236f2c4914b72b7a3c29d111f,
         type: 2}
+    - target: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8,
+        type: 2}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 1943590780962890, guid: a20dfd81ad6d14abf8dfbe1e28908050,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   m_IsPrefabParent: 0
@@ -2027,7 +2033,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2074822713}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 832553588}
+        m_MethodName: PutItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2074822713

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	GameManager gameManager;
 	Wall wall;
 	Animator animator;
+	public GameObject item;
 
 	//Click
 	float longPressTime = 0.2f;
@@ -19,14 +20,15 @@ public class Player : MonoBehaviour {
 	//Move
 	string key;
 	Vector2 movePosition;
-	const float HEIGH = 8.5f;
-	const float WIDTH = 8.5f;
-	Vector3 MOVEX = new Vector3 (0.5f, 0, 0);
-	Vector3 MOVEY = new Vector3 (0, 0.5f, 0);
+	const float ACTION_RANGE = 8.5f;
+	Vector3 MOVEX = new Vector3 (1f, 0, 0);
+	Vector3 MOVEY = new Vector3 (0, 1f, 0);
 
+	Vector2 itemPosition;
 	void Start () {
 
 		movePosition = transform.position;
+		itemPosition = new Vector2 (transform.position.x, transform.position.y + 1f);
 
 		cameraControl = GameObject.Find ("Main Camera").GetComponent<CameraControl> ();
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
@@ -65,32 +67,44 @@ public class Player : MonoBehaviour {
 			SetTargetPosition ();
 		}
 	}
+	public void PutItem () {
+		Ray itemRay = new Ray (itemPosition, transform.forward);
+		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction, 10);
+
+		if (itemHit.collider) {
+			Debug.Log ("dont put");
+			return;
+		}
+		Instantiate (item, itemPosition, Quaternion.identity);
+	}
 
 	public void SetTargetPosition () {
-
 		switch (key) {
 
 			case "left":
+				itemPosition = movePosition;
 				movePosition = transform.position - MOVEX;
-				movePosition.x = Mathf.Clamp (movePosition.x, -HEIGH, HEIGH);
+				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "up":
+				itemPosition = movePosition;
 				movePosition = transform.position + MOVEY;
-				movePosition.y = Mathf.Clamp (movePosition.y, -HEIGH, HEIGH);
+				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "right":
+				itemPosition = movePosition;
 				movePosition = transform.position + MOVEX;
-				movePosition.x = Mathf.Clamp (movePosition.x, -HEIGH, HEIGH);
+				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "down":
+				itemPosition = movePosition;
 				movePosition = transform.position - MOVEY;
-				movePosition.y = Mathf.Clamp (movePosition.y, -HEIGH, HEIGH);
+				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 		}
-
 		SetAnimationParam ();
 		Move ();
 	}
@@ -112,7 +126,6 @@ public class Player : MonoBehaviour {
 			movePosition = transform.position;
 			CantMove (hit);
 		} else {
-
 			transform.position = movePosition;
 		}
 	}
@@ -135,8 +148,7 @@ public class Player : MonoBehaviour {
 			int nextStage = 0;
 			gameManager.LoadScenes (nextStage);
 
-		} //8,-9  8,-9
-
+		}
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
@@ -147,5 +159,4 @@ public class Player : MonoBehaviour {
 			movePosition = transform.position;
 		}
 	}
-
 }
