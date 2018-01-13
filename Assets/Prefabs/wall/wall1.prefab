@@ -78,6 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ad3b04b8d604a629cf6fb8330e7e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundSprite: {fileID: 1563108272266990, guid: 6f05806d55df9472cb3b4c65052e0473,
+    type: 2}
+  damegeSprite: {fileID: 21300104, guid: 4d036a84d71504e53baed268d85e4141, type: 3}
 --- !u!212 &212530672590217956
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -6,7 +6,6 @@ public class Wall : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 	public GameObject groundSprite;
 	public Sprite damegeSprite;
-	int wallHp = 2;
 
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
@@ -18,14 +17,11 @@ public class Wall : MonoBehaviour {
 	}
 
 	public void wallDamage () {
-		wallHp--;
-		if (wallHp <= 0) {
-			Debug.Log ("wall");
-			// gameObject.SetActive (false);
-			Destroy (this.gameObject);
-			Instantiate (groundSprite, transform.position, Quaternion.identity);
 
-		} else { spriteRenderer.sprite = damegeSprite; }
+		spriteRenderer.sprite = damegeSprite;
+		Destroy (gameObject, 0.1f);
+		Instantiate (groundSprite, transform.position, Quaternion.identity);
+
 	}
 
 }
