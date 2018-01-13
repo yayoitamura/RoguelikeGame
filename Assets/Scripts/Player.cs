@@ -9,18 +9,20 @@ public class Player : MonoBehaviour {
 	Wall wall;
 	Animator animator;
 
-	// const float STEP = 0.5f;
-	Vector2 movePosition;
-	string key;
-
-	Vector3 MOVEX = new Vector3 (0.5f, 0, 0);
-	Vector3 MOVEY = new Vector3 (0, 0.5f, 0);
-
+	//Click
 	float longPressTime = 0.2f;
 	float interval = 0.1f;
 	float waitTime = 0;
 	bool isPressing = false;
 	bool isEvent = false;
+
+	//Move
+	string key;
+	Vector2 movePosition;
+	const float HEIGH = 8.5f;
+	const float WIDTH = 8.5f;
+	Vector3 MOVEX = new Vector3 (0.5f, 0, 0);
+	Vector3 MOVEY = new Vector3 (0, 0.5f, 0);
 
 	void Start () {
 
@@ -34,41 +36,31 @@ public class Player : MonoBehaviour {
 
 	void Update () {
 
-		//ボタンが押されていない時はスルー
 		if (!isPressing) {
 			return;
 		}
-		//待ち時間を減らす
 		waitTime -= Time.deltaTime;
-		//待ち時間がまだある時はスルー
 		if (waitTime > 0) {
 			return;
 		}
 
-		//メソッド実行、待ち時間設定
 		SetTargetPosition ();
 		waitTime = interval;
 		isEvent = true;
 
 	}
 
+	//buttonからの入力
 	public void PushDown (string pushButton) {
-
 		key = pushButton;
 		isPressing = true;
 		isEvent = false;
 		waitTime = longPressTime;
-
 	}
-
 	public void PushUp () {
-
 		isPressing = false;
-
 	}
-
 	public void Click () {
-		//一度もイベントが実行されていなければ実行
 		if (!isEvent) {
 			SetTargetPosition ();
 		}
@@ -80,18 +72,22 @@ public class Player : MonoBehaviour {
 
 			case "left":
 				movePosition = transform.position - MOVEX;
+				movePosition.x = Mathf.Clamp (movePosition.x, -HEIGH, HEIGH);
 				break;
 
 			case "up":
 				movePosition = transform.position + MOVEY;
+				movePosition.y = Mathf.Clamp (movePosition.y, -HEIGH, HEIGH);
 				break;
 
 			case "right":
 				movePosition = transform.position + MOVEX;
+				movePosition.x = Mathf.Clamp (movePosition.x, -HEIGH, HEIGH);
 				break;
 
 			case "down":
 				movePosition = transform.position - MOVEY;
+				movePosition.y = Mathf.Clamp (movePosition.y, -HEIGH, HEIGH);
 				break;
 		}
 
@@ -116,9 +112,8 @@ public class Player : MonoBehaviour {
 			movePosition = transform.position;
 			CantMove (hit);
 		} else {
-			// float step = 5f;
+
 			transform.position = movePosition;
-			// transform.position = Vector3.MoveTowards (transform.position, movePosition, step * Time.deltaTime);
 		}
 	}
 
@@ -140,7 +135,7 @@ public class Player : MonoBehaviour {
 			int nextStage = 0;
 			gameManager.LoadScenes (nextStage);
 
-		}
+		} //8,-9  8,-9
 
 	}
 
