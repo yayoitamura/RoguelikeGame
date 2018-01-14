@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4570927273876350}
   - component: {fileID: 212825583754861884}
-  - component: {fileID: 61808401463867898}
+  - component: {fileID: 61983098083592038}
   m_Layer: 10
   m_Name: wall3
   m_TagString: wall
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61808401463867898
+--- !u!61 &61983098083592038
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -57,14 +57,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.0666667, y: 1.0666667}
+    oldSize: {x: 1.032258, y: 1.032258}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0666667, y: 1.0666667}
+  m_Size: {x: 1.032258, y: 1.032258}
   m_EdgeRadius: 0
 --- !u!212 &212825583754861884
 SpriteRenderer:

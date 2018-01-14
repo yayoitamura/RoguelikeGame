@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	string key;
 	Vector2 movePosition;
 	const float ACTION_RANGE = 8.5f;
+	Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
 	Vector3 MOVEX = new Vector3 (1f, 0, 0);
 	Vector3 MOVEY = new Vector3 (0, 1f, 0);
 
@@ -72,7 +73,6 @@ public class Player : MonoBehaviour {
 		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction, 10);
 
 		if (itemHit.collider) {
-			Debug.Log ("dont put");
 			return;
 		}
 		Instantiate (item, itemPosition, Quaternion.identity);
@@ -82,25 +82,21 @@ public class Player : MonoBehaviour {
 		switch (key) {
 
 			case "left":
-				itemPosition = movePosition;
 				movePosition = transform.position - MOVEX;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "up":
-				itemPosition = movePosition;
 				movePosition = transform.position + MOVEY;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "right":
-				itemPosition = movePosition;
 				movePosition = transform.position + MOVEX;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "down":
-				itemPosition = movePosition;
 				movePosition = transform.position - MOVEY;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
@@ -126,6 +122,10 @@ public class Player : MonoBehaviour {
 			movePosition = transform.position;
 			CantMove (hit);
 		} else {
+			itemPosition = transform.position;
+			// movePosition = new Vector2 (
+			// 	Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE),
+			// 	Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE));
 			transform.position = movePosition;
 		}
 	}
