@@ -15,12 +15,13 @@ public class CameraControl : MonoBehaviour {
 	}
 
 	public void Move () {
-		float cameraPositionX = Mathf.Clamp (player.transform.position.x, MOVE_MIN_X, MOVE_MAX_X);
-		float cameraPositionY = Mathf.Clamp (player.transform.position.y, MOVE_MIN_Y, MOVE_MAX_Y);
 
-		// transform.position = new Vector3 (cameraPositionX, cameraPositionY, z);
+		float cameraPositionX = player.transform.position.x;
+		float cameraPositionY = player.transform.position.y;
+
+		transform.position = new Vector3 (cameraPositionX, cameraPositionY, z);
 		// transform.position = Vector2.MoveTowards (transform.position, new Vector2 (target.x, target.y), step * Time.deltaTime);
-		transform.position = Vector3.Lerp (transform.position, new Vector3 (cameraPositionX, cameraPositionY, z), Time.deltaTime * 10f);
+		// transform.position = Vector3.Lerp (transform.position, new Vector3 (cameraPositionX, cameraPositionY, z), Time.deltaTime * 10f);
 
 	}
 
