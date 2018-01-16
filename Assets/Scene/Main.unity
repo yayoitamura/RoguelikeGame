@@ -706,6 +706,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1573200261489150, guid: 2665f6666be7b4b1a9cba901e76078db, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2665f6666be7b4b1a9cba901e76078db, type: 2}
   m_IsPrefabParent: 0
@@ -2064,6 +2068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 1129635029449754, guid: 38484ac236f2c4914b72b7a3c29d111f, type: 2}
   floorPrefab: {fileID: 1563108272266990, guid: 6f05806d55df9472cb3b4c65052e0473,
+    type: 2}
+  stepsPrefab: {fileID: 1573200261489150, guid: 2665f6666be7b4b1a9cba901e76078db,
     type: 2}
   tileContainer: {fileID: 1932000768}
 --- !u!4 &1736672854

@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
 	public void Click () {
 		if (!isEvent) {
 			SetTargetPosition ();
-		}
+		} //方向転換後マスを勧められない時に出せない
 	}
 	public void PutItem () {
 		Ray itemRay = new Ray (itemPosition, transform.forward);

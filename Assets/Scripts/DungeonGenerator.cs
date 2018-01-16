@@ -45,6 +45,15 @@ public class DungeonGenerator : MonoBehaviour {
 			map = passage.WriteToMap (map);
 		}
 
+		// 【追加】：マップの状態をコンソールに表示する(確認用)
+		Debug.Log (GetMapInfo (map));
+
+		// 【追加】：階段を設置する
+		SetSteps (map);
+
+		// 【追加】：マップの状態をコンソールに表示する(確認用)
+		Debug.Log (GetMapInfo (map));
+
 		return map;
 	}
 
@@ -154,6 +163,56 @@ public class DungeonGenerator : MonoBehaviour {
 
 		// areasから全てのエリアが除去されたならば、全てのエリアが繋がっているということになる
 		return areas.Count == 0;
+	}
+
+	/// <summary>
+	/// 【追加】：マップの状態を文字列として取得する(90度ずれる)
+	/// </summary>
+	string GetMapInfo (int[, ] map) {
+		string mapInfo = "";
+
+		for (var x = 0; x < map.GetLength (0); x++) {
+			for (var y = 0; y < map.GetLength (0); y++) {
+				mapInfo += map[x, y];
+			}
+			mapInfo += "\n";
+		}
+
+		return mapInfo;
+	}
+
+	/// <summary>
+	/// 【追加】：階段を設置する(マップの2次元配列で1の場所をランダムで2にする)
+	/// </summary>
+	void SetSteps (int[, ] map) {
+		int countNum1 = 0; // マップ中にある1の数を格納
+
+		// マップ中にある1の数を数える
+		for (var x = 0; x < map.GetLength (0); x++) {
+			for (var y = 0; y < map.GetLength (1); y++) {
+				if (map[x, y] == 1) {
+					countNum1++;
+				}
+			}
+		}
+
+		// 1を2に変更する場所をランダムに決定する
+		int stepsPoint = new System.Random ().Next (countNum1);
+
+		int countForSteps = 0; // ↓のfor文内で1の場所をカウントするための変数
+
+		// 1の場所を数えながらstairPointと一致した場所を2にする
+		for (var x = 0; x < map.GetLength (0); x++) {
+			for (var y = 0; y < map.GetLength (1); y++) {
+				if (map[x, y] == 1) {
+					if (countForSteps == stepsPoint) {
+						map[x, y] = 2;
+					}
+					countForSteps++;
+				}
+			}
+		}
+
 	}
 
 	/// <summary>
@@ -360,4 +419,5 @@ public class DungeonGenerator : MonoBehaviour {
 			return map;
 		}
 	}
+
 }
