@@ -198,6 +198,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 		// 1を2に変更する場所をランダムに決定する
 		int stepsPoint = new System.Random ().Next (countNum1);
+		int playerPoint = new System.Random ().Next (countNum1);
 
 		int countForSteps = 0; // ↓のfor文内で1の場所をカウントするための変数
 
@@ -207,6 +208,9 @@ public class DungeonGenerator : MonoBehaviour {
 				if (map[x, y] == 1) {
 					if (countForSteps == stepsPoint) {
 						map[x, y] = 2;
+					}
+					if (countForSteps == playerPoint) {
+						map[x, y] = 3;
 					}
 					countForSteps++;
 				}

@@ -119,7 +119,6 @@ public class Player : MonoBehaviour {
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
 
 		if (hit.collider) {
-			movePosition = transform.position;
 			CantMove (hit);
 		} else {
 			itemPosition = transform.position;
@@ -133,10 +132,12 @@ public class Player : MonoBehaviour {
 	void CantMove (RaycastHit2D hit) {
 
 		if (hit.collider.gameObject.tag == "enemy") {
+			movePosition = transform.position;
 			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 		}
 
 		if (hit.collider.gameObject.tag == "wall") {
+			movePosition = transform.position;
 			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 
 			wall = hit.collider.gameObject.GetComponent<Wall> ();
@@ -145,10 +146,15 @@ public class Player : MonoBehaviour {
 
 		if (hit.collider.gameObject.tag == "steps") {
 			Debug.Log ("Raycast " + hit.collider.gameObject.name);
-			int nextStage = 0;
-			gameManager.LoadScenes (nextStage);
+			transform.position = movePosition;
+			Invoke ("MoveScene", 1.0f);
 
 		}
+	}
+
+	void MoveScene () {
+		int nextStage = 0;
+		gameManager.LoadScenes (nextStage);
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {

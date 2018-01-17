@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	[SerializeField] GameObject wallPrefab;
 	[SerializeField] GameObject floorPrefab;
 	[SerializeField] GameObject stepsPrefab; // 追加：階段プレファブ
+	[SerializeField] GameObject playerPrefab;
 	[SerializeField] Transform tileContainer;
 	DungeonGenerator generator;
+	static int stage;
+	Text stageText;
 
 	void Start () {
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
+		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
+		stageText.text = "stage : " + stage;
 
 		var map = generator.Generate ();
 		// マップを元にオブジェクト生成
@@ -28,6 +34,9 @@ public class GameManager : MonoBehaviour {
 					case 2:
 						tile = Instantiate (stepsPrefab);
 						break;
+					case 3:
+						tile = Instantiate (playerPrefab);
+						break;
 					default:
 						tile = Instantiate (wallPrefab);
 						break;
@@ -41,8 +50,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update () { }
-
 	public void LoadScenes (int index) {
+		stage++;
 		SceneManager.LoadScene (index);
 	}
 }
