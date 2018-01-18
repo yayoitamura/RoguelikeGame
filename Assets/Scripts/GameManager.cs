@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject wallPrefab;
 	[SerializeField] GameObject floorPrefab;
 	[SerializeField] GameObject stepsPrefab; // 追加：階段プレファブ
-	[SerializeField] GameObject playerPrefab;
+	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
+	GameObject enemys;
+	GameObject steps;
 	DungeonGenerator generator;
 	static int stage;
 	Text stageText;
@@ -32,10 +34,16 @@ public class GameManager : MonoBehaviour {
 						tile = Instantiate (floorPrefab);
 						break;
 					case 2:
-						tile = Instantiate (stepsPrefab);
+						tile = Instantiate (floorPrefab);
+						steps = Instantiate (stepsPrefab);
+						steps.transform.SetParent (tileContainer);
+						steps.transform.localPosition = new Vector2 (x, y);
 						break;
 					case 3:
-						tile = Instantiate (playerPrefab);
+						tile = Instantiate (floorPrefab);
+						enemys = Instantiate (enemyPrefab);
+						enemys.transform.SetParent (tileContainer);
+						enemys.transform.localPosition = new Vector2 (x, y);
 						break;
 					default:
 						tile = Instantiate (wallPrefab);
