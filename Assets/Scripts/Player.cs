@@ -133,23 +133,24 @@ public class Player : MonoBehaviour {
 
 		if (hit.collider.gameObject.tag == "enemy") {
 			movePosition = transform.position;
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
-		}
+			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			return;
 
-		if (hit.collider.gameObject.tag == "wall") {
+		} else if (hit.collider.gameObject.tag == "wall") {
 			movePosition = transform.position;
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
 
 			wall = hit.collider.gameObject.GetComponent<Wall> ();
 			wall.wallDamage ();
-		}
+			return;
 
-		if (hit.collider.gameObject.tag == "steps") {
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
+		} else if (hit.collider.gameObject.tag == "steps") {
+			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			transform.position = movePosition;
 			Invoke ("MoveScene", 1.0f);
+			return;
 
-		}
+		} else { transform.position = movePosition; }
 	}
 
 	void MoveScene () {
@@ -159,7 +160,7 @@ public class Player : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D other) {
 		if (other.gameObject.tag == "wall") {
-			Debug.Log ("colision");
+			// Debug.Log ("colision");
 			movePosition = transform.position;
 		} else {
 			movePosition = transform.position;

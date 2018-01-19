@@ -47,13 +47,13 @@ public class DungeonGenerator : MonoBehaviour {
 		}
 
 		// 【追加】：マップの状態をコンソールに表示する(確認用)
-		Debug.Log (GetMapInfo (map));
+		// Debug.Log (GetMapInfo (map));
 
 		// 【追加】：階段を設置する
 		SetSteps (map);
 
 		// 【追加】：マップの状態をコンソールに表示する(確認用)
-		Debug.Log (GetMapInfo (map));
+		// Debug.Log (GetMapInfo (map));
 
 		return map;
 	}
