@@ -4,6 +4,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+	bool playerTurn;
 	CameraControl cameraControl;
 	GameManager gameManager;
 	Wall wall;
@@ -24,8 +25,8 @@ public class Player : MonoBehaviour {
 	Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
 	Vector3 MOVEX = new Vector3 (1f, 0, 0);
 	Vector3 MOVEY = new Vector3 (0, 1f, 0);
-
 	Vector2 itemPosition;
+
 	void Start () {
 
 		movePosition = transform.position;
@@ -113,8 +114,6 @@ public class Player : MonoBehaviour {
 
 	void Move () {
 
-		cameraControl.Move ();
-
 		Ray ray = new Ray (movePosition, transform.forward);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
 
@@ -127,30 +126,35 @@ public class Player : MonoBehaviour {
 			// 	Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE));
 			transform.position = movePosition;
 		}
+
+		cameraControl.Move ();
 	}
 
 	void CantMove (RaycastHit2D hit) {
 
 		if (hit.collider.gameObject.tag == "enemy") {
 			movePosition = transform.position;
-			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			return;
 
 		} else if (hit.collider.gameObject.tag == "wall") {
 			movePosition = transform.position;
-			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 
 			wall = hit.collider.gameObject.GetComponent<Wall> ();
 			wall.wallDamage ();
 			return;
 
 		} else if (hit.collider.gameObject.tag == "steps") {
-			// Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			transform.position = movePosition;
 			Invoke ("MoveScene", 1.0f);
 			return;
 
-		} else { transform.position = movePosition; }
+		} else {
+			Debug.Log ("Raycast " + hit.collider.gameObject.name);
+			transform.position = movePosition;
+		}
 	}
 
 	void MoveScene () {
