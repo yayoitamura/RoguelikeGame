@@ -4,11 +4,13 @@ using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
+
 	bool playerTurn;
 	CameraControl cameraControl;
 	GameManager gameManager;
 	Wall wall;
 	Animator animator;
+	public GameObject Damage;
 	public GameObject item;
 
 	//Click
@@ -142,6 +144,7 @@ public class Player : MonoBehaviour {
 
 		if (hit.collider.gameObject.tag == "enemy") {
 			movePosition = transform.position;
+			Instantiate (Damage, transform.position, Quaternion.identity);
 			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			return;
 
@@ -151,6 +154,7 @@ public class Player : MonoBehaviour {
 
 			wall = hit.collider.gameObject.GetComponent<Wall> ();
 			wall.wallDamage ();
+
 			return;
 
 		} else if (hit.collider.gameObject.tag == "steps") {
