@@ -8,9 +8,13 @@ public class Wall : MonoBehaviour {
 	public GameObject groundSprite;
 	public Sprite damegeSprite;
 
+	//Audio
+	AudioSource WallAudio;
+	public AudioClip breakWall;
+
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
-
+		WallAudio = GetComponent<AudioSource> ();
 	}
 
 	void Update () {
@@ -22,6 +26,8 @@ public class Wall : MonoBehaviour {
 		spriteRenderer.sprite = damegeSprite;
 		ParticleSystem particle = Instantiate (particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem> ();
 
+		WallAudio.PlayOneShot (breakWall, 1f);
+		Debug.Log (breakWall);
 		particle.Play ();
 		ParticleSystem.MainModule mainModule = particle.main;
 		Destroy (particle.gameObject, mainModule.duration);

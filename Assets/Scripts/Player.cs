@@ -27,6 +27,10 @@ public class Player : MonoBehaviour {
 	Vector3 MOVEY = new Vector3 (0, 1f, 0);
 	Vector2 itemPosition;
 
+	//Audio
+	AudioSource PlayerAudio;
+	public AudioClip footsateps;
+
 	void Start () {
 
 		movePosition = transform.position;
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour {
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 
 		animator = GetComponent<Animator> ();
+		PlayerAudio = GetComponent<AudioSource> ();
 	}
 
 	void Update () {
@@ -70,6 +75,7 @@ public class Player : MonoBehaviour {
 		} //方向転換後マスを勧められない時に出せない
 	}
 	public void PutItem () {
+
 		Ray itemRay = new Ray (itemPosition, transform.forward);
 		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction, 10);
 
@@ -120,6 +126,8 @@ public class Player : MonoBehaviour {
 		if (hit.collider) {
 			CantMove (hit);
 		} else {
+			PlayerAudio.PlayOneShot (footsateps, 0.2f);
+
 			itemPosition = transform.position;
 			// movePosition = new Vector2 (
 			// 	Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE),
