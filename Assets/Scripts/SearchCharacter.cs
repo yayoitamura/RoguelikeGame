@@ -5,8 +5,6 @@ public class SearchCharacter : MonoBehaviour {
 	GameObject target;
 	GameObject enemy;
 
-	Vector2 targetPsition;
-
 	void Start () {
 		target = GameObject.Find ("Man");
 		enemy = transform.parent.gameObject;
@@ -14,7 +12,7 @@ public class SearchCharacter : MonoBehaviour {
 
 	void OnTriggerStay2D (Collider2D other) {
 		if (other.tag == "player") {
-			enemy.GetComponent<Enemy> ().ChasePlayer (other.gameObject); 
+			enemy.GetComponent<Enemy> ().ChasePlayer (other.gameObject);
 		}
 	}
 

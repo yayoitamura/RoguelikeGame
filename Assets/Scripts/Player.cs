@@ -25,8 +25,8 @@ public class Player : MonoBehaviour {
 	Vector2 movePosition;
 	const float ACTION_RANGE = 8.5f;
 	Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
-	Vector3 MOVEX = new Vector3 (1f, 0, 0);
-	Vector3 MOVEY = new Vector3 (0, 1f, 0);
+	const float MOVE_X = 1f;
+	const float MOVE_Y = 1f;
 	Vector2 itemPosition;
 
 	//Audio
@@ -91,27 +91,27 @@ public class Player : MonoBehaviour {
 		switch (key) {
 
 			case "left":
-				movePosition = transform.position - MOVEX;
+				movePosition.x = transform.position.x - MOVE_X;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "up":
-				movePosition = transform.position + MOVEY;
+				movePosition.y = transform.position.y + MOVE_Y;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "right":
-				movePosition = transform.position + MOVEX;
+				movePosition.x = transform.position.x + MOVE_X;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "down":
-				movePosition = transform.position - MOVEY;
+				movePosition.y = transform.position.y - MOVE_Y;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 		}
 		SetAnimationParam ();
-		Move ();
+		Move (movePosition);
 	}
 
 	void SetAnimationParam () {
@@ -120,7 +120,7 @@ public class Player : MonoBehaviour {
 
 	}
 
-	void Move () {
+	void Move (Vector2 movePosition) {
 
 		Ray ray = new Ray (movePosition, transform.forward);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
 		if (hit.collider) {
 			CantMove (hit);
 		} else {
-			PlayerAudio.PlayOneShot (footsateps, 0.2f);
+			PlayerAudio.PlayOneShot (footsateps, 0.1f);
 
 			itemPosition = transform.position;
 			// movePosition = new Vector2 (
@@ -145,38 +145,30 @@ public class Player : MonoBehaviour {
 		if (hit.collider.gameObject.tag == "enemy") {
 			movePosition = transform.position;
 			Instantiate (Damage, transform.position, Quaternion.identity);
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
-			return;
 
 		} else if (hit.collider.gameObject.tag == "wall") {
 			movePosition = transform.position;
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 
 			wall = hit.collider.gameObject.GetComponent<Wall> ();
 			wall.wallDamage ();
 
-			return;
-
 		} else if (hit.collider.gameObject.tag == "steps") {
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			transform.position = movePosition;
 			Invoke ("MoveScene", 1.0f);
-			return;
 
 		} else {
-			Debug.Log ("Raycast " + hit.collider.gameObject.name);
 			transform.position = movePosition;
 		}
 	}
 
 	void MoveScene () {
-		int nextStage = 0;
-		gameManager.LoadScenes (nextStage);
+
+		gameManager.LoadScene ();
+
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
 		if (other.gameObject.tag == "wall") {
-			// Debug.Log ("colision");
 			movePosition = transform.position;
 		} else {
 			movePosition = transform.position;

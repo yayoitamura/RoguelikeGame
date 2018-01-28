@@ -11,15 +11,18 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject stepsPrefab; // 追加：階段プレファブ
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
+	DungeonGenerator generator;
+
 	GameObject enemys;
 	GameObject steps;
-	DungeonGenerator generator;
+
 	static int stage;
 	Text stageText;
 
 	void Start () {
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
+
 		stageText.text = "stage : " + stage;
 
 		var map = generator.Generate ();
@@ -58,8 +61,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update () { }
-	public void LoadScenes (int index) {
+	public void LoadScene () {
+		const int nextStage = 0;
 		stage++;
-		SceneManager.LoadScene (index);
+		SceneManager.LoadScene (nextStage);
 	}
 }

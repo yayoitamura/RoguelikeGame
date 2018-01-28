@@ -23,13 +23,13 @@ GameObject:
   - component: {fileID: 61819060941778230}
   - component: {fileID: 50597035645951982}
   - component: {fileID: 114616483178775726}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1944805564642538
 GameObject:
   m_ObjectHideFlags: 0

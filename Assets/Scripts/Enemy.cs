@@ -17,9 +17,7 @@ public class Enemy : MonoBehaviour {
 
     float x = targetPsition.x;
     float y = targetPsition.y;
-    //追跡方向の決定
     Vector2 direction = new Vector2 (x - transform.position.x, y - transform.position.y).normalized;
-    //ターゲット方向に力を加える
     GetComponent<Rigidbody2D> ().velocity = (direction * 2);
 
   }

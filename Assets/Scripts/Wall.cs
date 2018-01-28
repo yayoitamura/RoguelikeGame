@@ -27,12 +27,11 @@ public class Wall : MonoBehaviour {
 		ParticleSystem particle = Instantiate (particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem> ();
 
 		WallAudio.PlayOneShot (breakWall, 1f);
-		Debug.Log (breakWall);
 		particle.Play ();
 		ParticleSystem.MainModule mainModule = particle.main;
 		Destroy (particle.gameObject, mainModule.duration);
 
-		Destroy (gameObject, 0.1f);
+		Destroy (gameObject, 0.3f);
 		Instantiate (groundSprite, transform.position, Quaternion.identity);
 
 	}
