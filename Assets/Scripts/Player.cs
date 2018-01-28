@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
 	float interval = 0.1f;
 	float waitTime = 0;
 	bool isPressing = false;
-	bool isEvent = false;
+	bool needMove = false;
 
 	//Move
 	string key;
@@ -45,34 +45,38 @@ public class Player : MonoBehaviour {
 		PlayerAudio = GetComponent<AudioSource> ();
 	}
 
+	/*
+	needMove isPressing（押している） 
+	長押し true true
+	押してない　true false
+	短い押し false true
+	押してない false false
+	*/
 	void Update () {
 
 		if (!isPressing) {
 			return;
 		}
 		waitTime -= Time.deltaTime;
-		if (waitTime > 0) {
-			return;
+		if (waitTime < 0) {
+			SetTargetPosition ();
+			waitTime = interval;
+			needMove = true;
 		}
-
-		SetTargetPosition ();
-		waitTime = interval;
-		isEvent = true;
-
 	}
 
 	//buttonからの入力
 	public void PushDown (string pushButton) {
 		key = pushButton;
 		isPressing = true;
-		isEvent = false;
+		needMove = false;
 		waitTime = longPressTime;
 	}
 	public void PushUp () {
 		isPressing = false;
 	}
 	public void Click () {
-		if (!isEvent) {
+		if (!needMove) {
 			SetTargetPosition ();
 		} //方向転換後マスを勧められない時に出せない
 	}
@@ -111,67 +115,49 @@ public class Player : MonoBehaviour {
 				break;
 		}
 		SetAnimationParam ();
-		Move (movePosition);
-	}
+		// 当たったものの取得
+		RaycastHit2D hit = getHitObject (movePosition);
 
-	void SetAnimationParam () {
-
-		animator.Play (key);
-
-	}
-
-	void Move (Vector2 movePosition) {
-
-		Ray ray = new Ray (movePosition, transform.forward);
-		RaycastHit2D hit = Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
-
-		if (hit.collider) {
-			CantMove (hit);
-		} else {
-			PlayerAudio.PlayOneShot (footsateps, 0.1f);
-
-			itemPosition = transform.position;
-			// movePosition = new Vector2 (
-			// 	Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE),
-			// 	Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE));
-			transform.position = movePosition;
-		}
-
+		Move (hit);
+		// カメラの移動
 		cameraControl.Move ();
 	}
 
-	void CantMove (RaycastHit2D hit) {
+	void SetAnimationParam () {
+		animator.Play (key);
+	}
 
-		if (hit.collider.gameObject.tag == "enemy") {
-			movePosition = transform.position;
-			Instantiate (Damage, transform.position, Quaternion.identity);
+	RaycastHit2D getHitObject (Vector2 position) {
+		Ray ray = new Ray (position, transform.forward);
+		return Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
+	}
 
-		} else if (hit.collider.gameObject.tag == "wall") {
-			movePosition = transform.position;
-
-			wall = hit.collider.gameObject.GetComponent<Wall> ();
-			wall.wallDamage ();
-
-		} else if (hit.collider.gameObject.tag == "steps") {
-			transform.position = movePosition;
-			Invoke ("MoveScene", 1.0f);
-
+	void Move (RaycastHit2D hit) {
+		// プレイヤー移動
+		if (hit.collider) {
+			if (hit.collider.gameObject.tag == "enemy") {
+				movePosition = transform.position;
+				Instantiate (Damage, transform.position, Quaternion.identity);
+			} else if (hit.collider.gameObject.tag == "wall") {
+				movePosition = transform.position;
+				wall = hit.collider.gameObject.GetComponent<Wall> ();
+				wall.wallDamage ();
+			} else if (hit.collider.gameObject.tag == "steps") {
+				transform.position = movePosition;
+				Invoke ("MoveScene", 1.0f);
+			}
 		} else {
+			PlayerAudio.PlayOneShot (footsateps, 0.1f);
+			itemPosition = transform.position;
 			transform.position = movePosition;
 		}
 	}
 
 	void MoveScene () {
-
 		gameManager.LoadScene ();
-
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {
-		if (other.gameObject.tag == "wall") {
-			movePosition = transform.position;
-		} else {
-			movePosition = transform.position;
-		}
+		movePosition = transform.position;
 	}
 }
