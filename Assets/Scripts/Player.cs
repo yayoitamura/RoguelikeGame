@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	Animator animator;
 	public GameObject Damage;
 	public GameObject item;
+	[SerializeField] private LayerMask layerMask;
 
 	//Click
 	float longPressTime = 0.2f;
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour {
 	public void PutItem () {
 
 		Ray itemRay = new Ray (itemPosition, transform.forward);
-		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction, 10);
+		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction);
 
 		if (itemHit.collider) {
 			return;
@@ -136,6 +137,7 @@ public class Player : MonoBehaviour {
 		// プレイヤー移動
 		if (hit.collider) {
 			if (hit.collider.gameObject.tag == "enemy") {
+				Debug.Log ("enemy hit");
 				movePosition = transform.position;
 				Instantiate (Damage, transform.position, Quaternion.identity);
 			} else if (hit.collider.gameObject.tag == "wall") {
@@ -152,7 +154,9 @@ public class Player : MonoBehaviour {
 			transform.position = movePosition;
 		}
 	}
+	void PlayerDamage () {
 
+	}
 	void MoveScene () {
 		gameManager.LoadScene ();
 	}

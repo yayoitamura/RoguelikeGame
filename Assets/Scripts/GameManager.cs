@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
 	DungeonGenerator generator;
-	GameObject fade;
+	FadeControl fade;
 	GameObject enemys;
 	GameObject steps;
 
@@ -21,15 +21,20 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 
-		fade = GameObject.Find ("Fade");
-		fade.GetComponent<FadeControl> ().isFadeIn = true;
-
-		// fade.SetActive (false);
+		fade = GameObject.Find ("Fade").GetComponent<FadeControl> ();
+		fade.isFadeIn = true;
 
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
 
 		stageText.text = "stage : " + stage;
+
+		DungeonGenerate ();
+	}
+
+	void Update () { }
+
+	void DungeonGenerate () {
 
 		var map = generator.Generate ();
 		// マップを元にオブジェクト生成
@@ -63,13 +68,11 @@ public class GameManager : MonoBehaviour {
 				tile.transform.localPosition = new Vector2 (x, y);
 			}
 		}
-
 	}
 
-	void Update () { }
 	public void LoadScene () {
-		fade.SetActive (true);
-		fade.GetComponent<FadeControl> ().isFadeOut = true;
+		GameObject.Find ("Fade").SetActive (true);
+		fade.isFadeOut = true;
 
 		const int nextStage = 0;
 		stage++;

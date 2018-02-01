@@ -22,9 +22,9 @@ TagManager:
   - floor
   - item
   - wall
-  - Character
-  - SearchCharacter
-  - 
+  - enemy
+  - player
+  - searchCharacter
   - 
   - 
   - 

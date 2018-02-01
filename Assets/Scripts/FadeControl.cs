@@ -12,7 +12,7 @@ public class FadeControl : MonoBehaviour {
 	public bool isFadeIn = false;
 	public bool isFadeOut = false;
 
-	void Start () {
+	void Awake () {
 		fade = GetComponent<Image> ();
 		red = fade.color.r;
 		green = fade.color.g;
@@ -35,9 +35,19 @@ public class FadeControl : MonoBehaviour {
 		fade.color = new Color (red, green, blue, alfa);
 		if (alfa <= 0) {
 			isFadeIn = false;
-			fade.enabled = false; //d)パネルの表示をオフにする
+			gameObject.SetActive (false);
 		}
 	}
+
+	// public bool FadeIn () {
+	// 	alfa -= speed;
+	// 	fade.color = new Color (red, green, blue, alfa);
+	// 	if (alfa <= 0) {
+	// 		isFadeIn = false;
+	// 		gameObject.SetActive (false);
+	// 	}
+	// 	return isFadeIn;
+	// }
 
 	void FadeOut () {
 		fade.enabled = true;
