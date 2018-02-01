@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
 	DungeonGenerator generator;
-
+	GameObject fade;
 	GameObject enemys;
 	GameObject steps;
 
@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour {
 	Text stageText;
 
 	void Start () {
+
+		fade = GameObject.Find ("Fade");
+		fade.GetComponent<FadeControl> ().isFadeIn = true;
+
+		// fade.SetActive (false);
+
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
 
@@ -62,8 +68,12 @@ public class GameManager : MonoBehaviour {
 
 	void Update () { }
 	public void LoadScene () {
+		fade.SetActive (true);
+		fade.GetComponent<FadeControl> ().isFadeOut = true;
+
 		const int nextStage = 0;
 		stage++;
 		SceneManager.LoadScene (nextStage);
+
 	}
 }
