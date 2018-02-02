@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
 	DungeonGenerator generator;
+
+	[SerializeField] GameObject title;
 	GameObject fade;
 	GameObject enemys;
 	GameObject steps;
@@ -19,15 +21,26 @@ public class GameManager : MonoBehaviour {
 	static int stage;
 	Text stageText;
 
-	public static GameManager instance;
-	void Awake () {
+	public enum GameState {
+		READY,
+		START,
+		PREPARE,
+		PLAYING,
+		END
+		};
+
+		GameState state = GameState.READY;
+
+		public static GameManager instance;
+		void Awake () {
 		if (instance == null) {
 
-			instance = this;
-			DontDestroyOnLoad (gameObject);
+		instance = this;
+		DontDestroyOnLoad (gameObject);
+
 		} else {
 
-			Destroy (gameObject);
+		Destroy (gameObject);
 		}
 
 	}
@@ -41,16 +54,56 @@ public class GameManager : MonoBehaviour {
 
 		stageText.text = "stage : " + stage;
 
-		SetFade ();
-		DungeonGenerate ();
+		// SetFade ();
+		// DungeonGenerate ();
 	}
 
 	void Update () {
+		Debug.Log ("Update " + state);
 
+		switch (state) {
+
+			case GameState.READY:
+				title.SetActive (true);
+				state = GameState.START;
+				break;
+			case GameState.START:
+
+				Debug.Log ("start");
+				//スタート
+				//ボタン操作○ プレイヤ× 敵×
+				//メニュー画面
+				break;
+			case GameState.PREPARE:
+				//準備
+				//ボタン操作× プレイヤ× 敵×
+				//シーン以降・フェード・ダンジョン生成
+				Debug.Log ("Prepare");
+				SetFade ();
+				DungeonGenerate ();
+				state = GameState.PLAYING;
+				break;
+			case GameState.PLAYING:
+				//プレイ中
+				//ボタン操作○ プレイヤ○ 敵○
+				//プレイ開始→プレイ終了（死or階段）
+				break;
+			case GameState.END:
+				//ゲーム終了
+				//ボタン操作○ プレイヤ× 敵×
+				//ゲームオーバー/クリア画面
+				break;
+
+		}
 	}
 
 	public void PushPlayButton () {
-		GameObject.Find ("Title").SetActive (false);
+		title.SetActive (false);
+		Debug.Log ("button " + state);
+
+		state = GameState.PREPARE;
+		Debug.Log ("button " + state);
+
 	}
 
 	void SetFade () {

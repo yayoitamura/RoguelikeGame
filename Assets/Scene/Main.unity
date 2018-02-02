@@ -1441,6 +1441,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1489558745}
+--- !u!114 &1526219668 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114775157894115020, guid: fa8fb64c3f32745a19042973b873a0e5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1797273710}
+  m_Script: {fileID: 11500000, guid: 86f82592197fb45f89b3eb2fc064eac6, type: 3}
 --- !u!1 &1528752513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,6 +1940,11 @@ Prefab:
       propertyPath: tileContainer
       value: 
       objectReference: {fileID: 1932000768}
+    - target: {fileID: 114775157894115020, guid: fa8fb64c3f32745a19042973b873a0e5,
+        type: 2}
+      propertyPath: title
+      value: 
+      objectReference: {fileID: 1421860590}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa8fb64c3f32745a19042973b873a0e5, type: 2}
   m_IsPrefabParent: 0
@@ -2221,8 +2232,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114775157894115020, guid: fa8fb64c3f32745a19042973b873a0e5,
-          type: 2}
+      - m_Target: {fileID: 1526219668}
         m_MethodName: PushPlayButton
         m_Mode: 1
         m_Arguments:
