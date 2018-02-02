@@ -12,27 +12,50 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] Transform tileContainer;
 	DungeonGenerator generator;
-	FadeControl fade;
+	GameObject fade;
 	GameObject enemys;
 	GameObject steps;
 
 	static int stage;
 	Text stageText;
 
+	public static GameManager instance;
+	void Awake () {
+		if (instance == null) {
+
+			instance = this;
+			DontDestroyOnLoad (gameObject);
+		} else {
+
+			Destroy (gameObject);
+		}
+
+	}
+
 	void Start () {
 
-		fade = GameObject.Find ("Fade").GetComponent<FadeControl> ();
-		fade.isFadeIn = true;
+		fade = GameObject.Find ("Fade");
 
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
 
 		stageText.text = "stage : " + stage;
 
+		SetFade ();
 		DungeonGenerate ();
 	}
 
-	void Update () { }
+	void Update () {
+
+	}
+
+	public void PushPlayButton () {
+		GameObject.Find ("Title").SetActive (false);
+	}
+
+	void SetFade () {
+		fade.GetComponent<FadeControl> ().isFadeIn = true;
+	}
 
 	void DungeonGenerate () {
 
@@ -69,14 +92,29 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+	public void NextStage () {
 
-	public void LoadScene () {
-		GameObject.Find ("Fade").SetActive (true);
-		fade.isFadeOut = true;
+		fade.SetActive (true);
+		fade.GetComponent<FadeControl> ().isFadeOut = true;
 
 		const int nextStage = 0;
 		stage++;
-		SceneManager.LoadScene (nextStage);
+
+		LoadScene (nextStage);
 
 	}
+
+	void LoadScene (int sceneIndex) {
+		SceneManager.LoadScene (sceneIndex);
+	}
+
+	// public void LoadScene () {
+	// 	fade.SetActive (true);
+	// 	fade.GetComponent<FadeControl> ().isFadeOut = true;
+
+	// 	const int nextStage = 0;
+	// 	stage++;
+	// 	SceneManager.LoadScene (nextStage);
+
+	// }
 }

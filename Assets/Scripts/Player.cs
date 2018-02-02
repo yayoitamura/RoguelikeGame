@@ -146,7 +146,7 @@ public class Player : MonoBehaviour {
 				wall.wallDamage ();
 			} else if (hit.collider.gameObject.tag == "steps") {
 				transform.position = movePosition;
-				Invoke ("MoveScene", 1.0f);
+				MoveScene (1);
 			}
 		} else {
 			PlayerAudio.PlayOneShot (footsateps, 0.1f);
@@ -157,8 +157,10 @@ public class Player : MonoBehaviour {
 	void PlayerDamage () {
 
 	}
-	void MoveScene () {
-		gameManager.LoadScene ();
+	void MoveScene (int sceneIndex) {
+
+		gameManager.NextStage ();
+
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {

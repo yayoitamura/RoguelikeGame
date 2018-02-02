@@ -36,6 +36,7 @@ public class FadeControl : MonoBehaviour {
 		if (alfa <= 0) {
 			isFadeIn = false;
 			gameObject.SetActive (false);
+			// fade.enabled = false;
 		}
 	}
 
