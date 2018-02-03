@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 	string key;
 	Vector2 movePosition;
 	const float ACTION_RANGE = 8.5f;
-	Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
+	// Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
 	const float MOVE_X = 1f;
 	const float MOVE_Y = 1f;
 	Vector2 itemPosition;
