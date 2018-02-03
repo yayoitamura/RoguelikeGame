@@ -6,89 +6,52 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	[SerializeField] GameObject wallPrefab;
-	[SerializeField] GameObject floorPrefab;
-	[SerializeField] GameObject stepsPrefab; // 追加：階段プレファブ
-	[SerializeField] GameObject enemyPrefab;
-	[SerializeField] Transform tileContainer;
-	DungeonGenerator generator;
-
+	Dungeon dungeon;
 	[SerializeField] GameObject title;
 	GameObject fade;
-	GameObject enemys;
-	GameObject steps;
-
 	static int stage;
 	Text stageText;
 
-	public enum GameState {
-		READY,
-		START,
-		PREPARE,
-		PLAYING,
-		END
-		};
-
-		GameState state = GameState.READY;
-
-		public static GameManager instance;
-		void Awake () {
-		if (instance == null) {
-
-		instance = this;
-		DontDestroyOnLoad (gameObject);
-
-		} else {
-
-		Destroy (gameObject);
-		}
+	void Awake () {
 
 	}
 
-	void Start () {
-
-		fade = GameObject.Find ("Fade");
-
-		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
-		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
-
-		stageText.text = "stage : " + stage;
-
-		// SetFade ();
-		// DungeonGenerate ();
-	}
+	void Start () { }
 
 	void Update () {
-		Debug.Log ("Update " + state);
 
-		switch (state) {
-
-			case GameState.READY:
+		switch (GameState.instance.state) {
+			case GameState.Game.READY:
 				title.SetActive (true);
-				state = GameState.START;
+				GameState.instance.state = GameState.Game.START;
 				break;
-			case GameState.START:
-
-				Debug.Log ("start");
+			case GameState.Game.START:
 				//スタート
 				//ボタン操作○ プレイヤ× 敵×
 				//メニュー画面
 				break;
-			case GameState.PREPARE:
+			case GameState.Game.PREPARE:
+				fade = GameObject.Find ("Fade");
+
+				dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
+
+				stageText = GameObject.Find ("Stage").GetComponent<Text> ();
+
+				// stageText.text = "stage : " + GameState.instance.state;
+
 				//準備
 				//ボタン操作× プレイヤ× 敵×
 				//シーン以降・フェード・ダンジョン生成
-				Debug.Log ("Prepare");
 				SetFade ();
-				DungeonGenerate ();
-				state = GameState.PLAYING;
+				dungeon.DungeonGenerate ();
+				GameState.instance.state = GameState.Game.PLAYING;
 				break;
-			case GameState.PLAYING:
+			case GameState.Game.PLAYING:
 				//プレイ中
 				//ボタン操作○ プレイヤ○ 敵○
 				//プレイ開始→プレイ終了（死or階段）
 				break;
-			case GameState.END:
+			case GameState.Game.END:
 				//ゲーム終了
 				//ボタン操作○ プレイヤ× 敵×
 				//ゲームオーバー/クリア画面
@@ -98,53 +61,17 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void PushPlayButton () {
-		title.SetActive (false);
-		Debug.Log ("button " + state);
 
-		state = GameState.PREPARE;
-		Debug.Log ("button " + state);
+		title.SetActive (false);
+		GameState.instance.state = GameState.Game.PREPARE;
 
 	}
 
 	void SetFade () {
+		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeIn = true;
 	}
 
-	void DungeonGenerate () {
-
-		var map = generator.Generate ();
-		// マップを元にオブジェクト生成
-		for (var x = 0; x < generator.width; x++) {
-			// 【修正】：↓を書き換え
-			// var tile = map[x, y] == 1 ? Instantiate (floorPrefab) : Instantiate (wallPrefab);
-			for (var y = 0; y < generator.height; y++) {
-				GameObject tile = null;
-				switch (map[x, y]) {
-					case 1:
-						tile = Instantiate (floorPrefab);
-						break;
-					case 2:
-						tile = Instantiate (floorPrefab);
-						steps = Instantiate (stepsPrefab);
-						steps.transform.SetParent (tileContainer);
-						steps.transform.localPosition = new Vector2 (x, y);
-						break;
-					case 3:
-						tile = Instantiate (floorPrefab);
-						enemys = Instantiate (enemyPrefab);
-						enemys.transform.SetParent (tileContainer);
-						enemys.transform.localPosition = new Vector2 (x, y);
-						break;
-					default:
-						tile = Instantiate (wallPrefab);
-						break;
-
-				}
-				tile.transform.SetParent (tileContainer);
-				tile.transform.localPosition = new Vector2 (x, y);
-			}
-		}
-	}
 	public void NextStage () {
 
 		fade.SetActive (true);
@@ -153,12 +80,17 @@ public class GameManager : MonoBehaviour {
 		const int nextStage = 0;
 		stage++;
 
-		LoadScene (nextStage);
+		// LoadScene (nextStage);
+		StartCoroutine ("LoadScene", nextStage);
+		// GameState.instance.state = GameState.Game.PREPARE;
 
 	}
 
-	void LoadScene (int sceneIndex) {
+	private IEnumerator LoadScene (int sceneIndex) {
+
 		SceneManager.LoadScene (sceneIndex);
+		yield return new WaitForSeconds (3.0f);
+		GameState.instance.state = GameState.Game.PREPARE;
 	}
 
 	// public void LoadScene () {
