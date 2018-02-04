@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 	Dungeon dungeon;
 	[SerializeField] GameObject title;
 	GameObject fade;
-	static int stage;
+	static int stage = 1;
 	Text stageText;
 
 	void Awake () {
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 		fade = GameObject.Find ("Fade");
 		dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
-		stageText.text = "stage : " + GameState.instance.state;
+		stageText.text = "stage : " + stage;
 
 		SetFadeIn ();
 		dungeon.DungeonGenerate ();
@@ -75,35 +75,27 @@ public class GameManager : MonoBehaviour {
 	void SetFadeOut () {
 		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeOut = true;
+		Debug.Log ("SetFadeOut");
 	}
 
-	public void NextStage () {
-
-		SetFadeOut ();
+	public void LoadNextStage () {
 
 		const int nextStage = 0;
 		stage++;
 
-		// LoadScene (nextStage);
 		StartCoroutine ("LoadScene", nextStage);
-		// GameState.instance.state = GameState.Game.PREPARE;
 
 	}
 
 	private IEnumerator LoadScene (int sceneIndex) {
 
+		SetFadeOut ();
+		yield return new WaitForSeconds (1.0f);
+
 		SceneManager.LoadScene (sceneIndex);
-		yield return new WaitForSeconds (3.0f);
+		yield return new WaitForSeconds (1.0f);
+
 		GameState.instance.state = GameState.Game.PREPARE;
+
 	}
-
-	// public void LoadScene () {
-	// 	fade.SetActive (true);
-	// 	fade.GetComponent<FadeControl> ().isFadeOut = true;
-
-	// 	const int nextStage = 0;
-	// 	stage++;
-	// 	SceneManager.LoadScene (nextStage);
-
-	// }
 }

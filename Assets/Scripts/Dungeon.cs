@@ -37,7 +37,6 @@ public class Dungeon : MonoBehaviour {
 			// 【修正】：↓を書き換え
 			// var tile = map[x, y] == 1 ? Instantiate (floorPrefab) : Instantiate (wallPrefab);
 			for (var y = 0; y < generator.height; y++) {
-				Debug.Log (map[x, y]);
 				GameObject tile = null;
 				switch (map[x, y]) {
 					case (int) MAP.WALL:

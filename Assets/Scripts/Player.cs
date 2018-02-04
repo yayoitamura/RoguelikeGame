@@ -159,7 +159,7 @@ public class Player : MonoBehaviour {
 	}
 	void MoveScene (int sceneIndex) {
 
-		gameManager.NextStage ();
+		gameManager.LoadNextStage ();
 
 	}
 
