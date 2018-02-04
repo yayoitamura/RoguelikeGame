@@ -31,19 +31,10 @@ public class GameManager : MonoBehaviour {
 				//メニュー画面
 				break;
 			case GameState.Game.PREPARE:
-				fade = GameObject.Find ("Fade");
-
-				dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
-
-				stageText = GameObject.Find ("Stage").GetComponent<Text> ();
-
-				// stageText.text = "stage : " + GameState.instance.state;
-
 				//準備
 				//ボタン操作× プレイヤ× 敵×
 				//シーン以降・フェード・ダンジョン生成
-				SetFade ();
-				dungeon.DungeonGenerate ();
+				Prepare ();
 				GameState.instance.state = GameState.Game.PLAYING;
 				break;
 			case GameState.Game.PLAYING:
@@ -67,15 +58,28 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	void SetFade () {
+	void Prepare () {
+		fade = GameObject.Find ("Fade");
+		dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
+		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
+		stageText.text = "stage : " + GameState.instance.state;
+
+		SetFadeIn ();
+		dungeon.DungeonGenerate ();
+	}
+	void SetFadeIn () {
 		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeIn = true;
 	}
 
-	public void NextStage () {
-
+	void SetFadeOut () {
 		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeOut = true;
+	}
+
+	public void NextStage () {
+
+		SetFadeOut ();
 
 		const int nextStage = 0;
 		stage++;

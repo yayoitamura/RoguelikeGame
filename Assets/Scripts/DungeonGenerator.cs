@@ -53,7 +53,7 @@ public class DungeonGenerator : MonoBehaviour {
 		SetSteps (map);
 
 		// 【追加】：マップの状態をコンソールに表示する(確認用)
-		// Debug.Log (GetMapInfo (map));
+		Debug.Log (GetMapInfo (map));
 
 		return map;
 	}

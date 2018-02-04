@@ -13,7 +13,13 @@ public class Dungeon : MonoBehaviour {
 	[SerializeField] GameObject title;
 	GameObject enemys;
 	GameObject steps;
-
+	private enum MAP {
+		WALL,
+		FLOOR,
+		STEPS,
+		ENEMYS,
+		PLAYER
+	}
 	// Use this for initialization
 	void Start () {
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
@@ -31,31 +37,33 @@ public class Dungeon : MonoBehaviour {
 			// 【修正】：↓を書き換え
 			// var tile = map[x, y] == 1 ? Instantiate (floorPrefab) : Instantiate (wallPrefab);
 			for (var y = 0; y < generator.height; y++) {
+				Debug.Log (map[x, y]);
 				GameObject tile = null;
 				switch (map[x, y]) {
-					case 1:
+					case (int) MAP.WALL:
+						tile = Instantiate (wallPrefab);
+						break;
+					case (int) MAP.FLOOR:
 						tile = Instantiate (floorPrefab);
 						break;
-					case 2:
+					case (int) MAP.STEPS:
 						tile = Instantiate (floorPrefab);
 						steps = Instantiate (stepsPrefab);
 						steps.transform.SetParent (tileContainer);
 						steps.transform.localPosition = new Vector2 (x, y);
 						break;
-					case 3:
+					case (int) MAP.ENEMYS:
 						tile = Instantiate (floorPrefab);
 						enemys = Instantiate (enemyPrefab);
 						enemys.transform.SetParent (tileContainer);
 						enemys.transform.localPosition = new Vector2 (x, y);
 						break;
 					default:
-						tile = Instantiate (wallPrefab);
 						break;
 
 				}
 				tile.transform.SetParent (tileContainer);
 				tile.transform.localPosition = new Vector2 (x, y);
-				// Debug.Log (tile);
 			}
 		}
 	}
