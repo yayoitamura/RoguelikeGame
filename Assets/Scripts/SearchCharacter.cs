@@ -2,23 +2,32 @@
 using UnityEngine;
 
 public class SearchCharacter : MonoBehaviour {
-	GameObject target;
+
+	bool isTrigger = false;
 	GameObject enemy;
 
 	void Start () {
-		target = GameObject.Find ("Man");
 		enemy = transform.parent.gameObject;
 	}
 
+	void Update () {
+		if (!isTrigger) {
+			enemy.GetComponent<Enemy> ().standBy ();
+		}
+	}
+
 	void OnTriggerStay2D (Collider2D other) {
+		Debug.Log ("triggerstay");
 		if (other.tag == "player") {
-			enemy.GetComponent<Enemy> ().ChasePlayer (other.gameObject);
+			enemy.GetComponent<Enemy> ().getPlayerPosition (other.gameObject);
+			isTrigger = true;
 		}
 	}
 
 	private void OnTriggerExit2D (Collider2D other) {
 		if (other.tag == "player") {
-			enemy.GetComponent<Enemy> ().dontChase ();
+			enemy.GetComponent<Enemy> ().abortChase ();
+			isTrigger = false;
 		}
 	}
 

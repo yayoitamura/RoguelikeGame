@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 95490079469292346}
   - component: {fileID: 114502514434808962}
   - component: {fileID: 82677480767524642}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Man
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -198,8 +198,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7565ec1765a54427a7cc12d907d28ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTurn: 0
   Damage: {fileID: 1253859540579954, guid: 58a63a2c7e6bf4a3e8328ecade9d57e1, type: 2}
   item: {fileID: 1943590780962890, guid: a20dfd81ad6d14abf8dfbe1e28908050, type: 2}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   footsateps: {fileID: 8300000, guid: ee1fa3cc909504e1b94fddb23d8035e5, type: 3}
 --- !u!212 &212770816689832654
 SpriteRenderer:
@@ -210,6 +214,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -225,6 +230,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

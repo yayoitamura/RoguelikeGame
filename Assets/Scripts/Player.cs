@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	bool playerTurn;
+	public bool playerTurn;
 	CameraControl cameraControl;
 	GameManager gameManager;
 	Wall wall;
@@ -149,9 +149,13 @@ public class Player : MonoBehaviour {
 				MoveScene (1);
 			}
 		} else {
-			PlayerAudio.PlayOneShot (footsateps, 0.1f);
-			itemPosition = transform.position;
-			transform.position = movePosition;
+			if (playerTurn) {
+				PlayerAudio.PlayOneShot (footsateps, 0.1f);
+				itemPosition = transform.position;
+
+				transform.position = movePosition;
+				playerTurn = false;
+			}
 		}
 	}
 	void PlayerDamage () {

@@ -23,13 +23,13 @@ GameObject:
   - component: {fileID: 61819060941778230}
   - component: {fileID: 50597035645951982}
   - component: {fileID: 114616483178775726}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1944805564642538
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4226516138949802}
   - component: {fileID: 61164023494020384}
   - component: {fileID: 114739398434772754}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: SearchArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1089818200650786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0

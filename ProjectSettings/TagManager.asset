@@ -20,11 +20,11 @@ TagManager:
   - 
   - 
   - floor
-  - item
-  - wall
-  - enemy
-  - player
-  - searchCharacter
+  - blockingLayer
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
