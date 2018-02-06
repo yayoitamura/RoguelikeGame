@@ -5,22 +5,22 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
   bool enemyTurn;
   Vector2　 playerPosition;
-
   Player player;
+
   void Start () {
     player = GameObject.Find ("Man").GetComponent<Player> ();
   }
 
-  public void standBy () {
 
-    if (playerPosition == new Vector2 (0, 0)) {
-      Debug.Log ("enemy null");
-      if (!player.playerTurn) {
-        player.playerTurn = true;
-      }
+  public void StandBy (bool isTrigger) {
+
+    if (!isTrigger && !player.playerTurn) {
+      Debug.Log ("Enemy Turn");
+      player.playerTurn = true;
+
     }
   }
-  public void getPlayerPosition (GameObject target) {
+  public void GetPlayerPosition (GameObject target) {
 
     playerPosition = target.transform.position;
     ChasePlayer ();
@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour {
   }
 
   public void ChasePlayer () {
-
     int xDirection = 0;
     int yDirection = 0;
 
@@ -42,6 +41,7 @@ public class Enemy : MonoBehaviour {
     Vector2 end = start + new Vector2 (xDirection, yDirection);
     if (!player.playerTurn) {
       transform.position = end;
+      Debug.Log ("2Enemy Turn");
       player.playerTurn = true;
     }
 

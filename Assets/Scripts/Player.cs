@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	public bool playerTurn;
+	public bool playerTurn = true;
 	CameraControl cameraControl;
 	GameManager gameManager;
 	Wall wall;
@@ -137,7 +137,6 @@ public class Player : MonoBehaviour {
 		// プレイヤー移動
 		if (hit.collider) {
 			if (hit.collider.gameObject.tag == "enemy") {
-				Debug.Log ("enemy hit");
 				movePosition = transform.position;
 				Instantiate (Damage, transform.position, Quaternion.identity);
 			} else if (hit.collider.gameObject.tag == "wall") {
@@ -154,6 +153,7 @@ public class Player : MonoBehaviour {
 				itemPosition = transform.position;
 
 				transform.position = movePosition;
+				Debug.Log("Player Turn");
 				playerTurn = false;
 			}
 		}

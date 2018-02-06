@@ -12,14 +12,14 @@ public class SearchCharacter : MonoBehaviour {
 
 	void Update () {
 		if (!isTrigger) {
-			enemy.GetComponent<Enemy> ().standBy ();
+			enemy.GetComponent<Enemy> ().StandBy (isTrigger);
 		}
 	}
 
 	void OnTriggerStay2D (Collider2D other) {
-		Debug.Log ("triggerstay");
 		if (other.tag == "player") {
-			enemy.GetComponent<Enemy> ().getPlayerPosition (other.gameObject);
+			Debug.Log ("player");
+			enemy.GetComponent<Enemy> ().GetPlayerPosition (other.gameObject);
 			isTrigger = true;
 		}
 	}
