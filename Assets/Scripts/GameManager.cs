@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour {
 	void SetFadeOut () {
 		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeOut = true;
-		Debug.Log ("SetFadeOut");
 	}
 
 	public void LoadNextStage () {

@@ -8,11 +8,11 @@ public class Player : MonoBehaviour {
 	public bool playerTurn = true;
 	CameraControl cameraControl;
 	GameManager gameManager;
-	Wall wall;
 	Animator animator;
-	public GameObject Damage;
-	public GameObject item;
+	[SerializeField] private GameObject Damage;
+	[SerializeField] private GameObject item;
 	[SerializeField] private LayerMask layerMask;
+	int playerHp = 5;
 
 	//Click
 	float longPressTime = 0.2f;
@@ -26,8 +26,6 @@ public class Player : MonoBehaviour {
 	Vector2 movePosition;
 	const float ACTION_RANGE = 8.5f;
 	// Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
-	const float MOVE_X = 1f;
-	const float MOVE_Y = 1f;
 	Vector2 itemPosition;
 
 	//Audio
@@ -93,25 +91,26 @@ public class Player : MonoBehaviour {
 	}
 
 	public void SetTargetPosition () {
+		const float PLAYER_STRIDE = 1f;
 		switch (key) {
 
 			case "left":
-				movePosition.x = transform.position.x - MOVE_X;
+				movePosition.x = transform.position.x - PLAYER_STRIDE;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "up":
-				movePosition.y = transform.position.y + MOVE_Y;
+				movePosition.y = transform.position.y + PLAYER_STRIDE;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "right":
-				movePosition.x = transform.position.x + MOVE_X;
+				movePosition.x = transform.position.x + PLAYER_STRIDE;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
 
 			case "down":
-				movePosition.y = transform.position.y - MOVE_Y;
+				movePosition.y = transform.position.y - PLAYER_STRIDE;
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 		}
@@ -137,12 +136,11 @@ public class Player : MonoBehaviour {
 		// プレイヤー移動
 		if (hit.collider) {
 			if (hit.collider.gameObject.tag == "enemy") {
-				movePosition = transform.position;
-				Instantiate (Damage, transform.position, Quaternion.identity);
+				AttackEnemy (hit.collider.gameObject);
+
 			} else if (hit.collider.gameObject.tag == "wall") {
-				movePosition = transform.position;
-				wall = hit.collider.gameObject.GetComponent<Wall> ();
-				wall.wallDamage ();
+				BreakWall (hit.collider.gameObject);
+
 			} else if (hit.collider.gameObject.tag == "steps") {
 				transform.position = movePosition;
 				MoveScene (1);
@@ -153,18 +151,32 @@ public class Player : MonoBehaviour {
 				itemPosition = transform.position;
 
 				transform.position = movePosition;
-				Debug.Log("Player Turn");
 				playerTurn = false;
+				//ターン終了	
 			}
 		}
 	}
-	void PlayerDamage () {
+
+	void AttackEnemy (GameObject hitEnemy) {
+		Enemy enemy = hitEnemy.GetComponent<Enemy> ();
+		enemy.ReceiveAttack ();
+		movePosition = transform.position;
+		playerTurn = false;
+	}
+	void BreakWall (GameObject hitWall) {
+		movePosition = transform.position;
+		Wall wall = hitWall.GetComponent<Wall> ();
+		wall.wallDamage ();
+	}
+
+	public void ReceiveAttack () {
+		Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
+		playerHp -= 1;
 
 	}
+
 	void MoveScene (int sceneIndex) {
-
 		gameManager.LoadNextStage ();
-
 	}
 
 	void OnCollisionEnter2D (Collision2D other) {

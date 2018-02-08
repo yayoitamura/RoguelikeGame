@@ -1215,6 +1215,11 @@ Prefab:
       propertyPath: playerTurn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8,
+        type: 2}
+      propertyPath: layerMask.m_Bits
+      value: 1536
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   m_IsPrefabParent: 0

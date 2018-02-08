@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
   Player player;
-  SearchCharacter search;
   Vector2　 playerPosition;
   bool isMovable;
+  int enemyHp = 10;
+  [SerializeField] private GameObject Damage;
 
   void Start () {
     player = GameObject.Find ("Man").GetComponent<Player> ();
-    search = transform.GetChild (0).gameObject.GetComponent<SearchCharacter> ();
   }
 
   void Update () {
@@ -63,18 +63,35 @@ public class Enemy : MonoBehaviour {
     RaycastHit2D hit = Physics2D.Linecast (start, end);
 
     boxCollider.enabled = true;
-
     if (hit) {
-      player.playerTurn = true;
+      if (hit.transform.tag == "wall") {
+        Debug.Log ("wall hit  " + hit.transform.tag);
+        player.playerTurn = true;
+
+      } else if (hit.transform.tag == "player") {
+        AttackPlayer ();
+        player.playerTurn = true;
+      }
     } else {
-      transform.position = end;
-      player.playerTurn = true;
+      if (!player.playerTurn) {
+        transform.position = end;
+        player.playerTurn = true;
+      }
     }
   }
 
   RaycastHit2D getHitObject (Vector2 position) {
     Ray ray = new Ray (position, transform.forward);
     return Physics2D.Raycast ((Vector2) ray.origin, (Vector2) ray.direction, 10);
+  }
+
+  void AttackPlayer () {
+    player.ReceiveAttack ();
+  }
+
+  public void ReceiveAttack () {
+    Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
+    enemyHp -= 1;
   }
 
   public void abortChase () {
