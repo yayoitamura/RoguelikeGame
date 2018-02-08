@@ -3,52 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-  bool enemyTurn;
-  Vector2　 playerPosition;
   Player player;
+  SearchCharacter search;
+  Vector2　 playerPosition;
+  bool isMovable;
 
   void Start () {
     player = GameObject.Find ("Man").GetComponent<Player> ();
+    search = transform.GetChild (0).gameObject.GetComponent<SearchCharacter> ();
   }
 
-
-  public void StandBy (bool isTrigger) {
-
-    if (!isTrigger && !player.playerTurn) {
-      Debug.Log ("Enemy Turn");
-      player.playerTurn = true;
-
-    }
-  }
-  public void GetPlayerPosition (GameObject target) {
-
-    playerPosition = target.transform.position;
-    ChasePlayer ();
-
-  }
-
-  public void ChasePlayer () {
-    int xDirection = 0;
-    int yDirection = 0;
-
-    if (Mathf.Abs (playerPosition.x - transform.position.x) < float.Epsilon) {
-      yDirection = playerPosition.y > transform.position.y ? 1 : -1;
-    } else {
-      xDirection = playerPosition.x > transform.position.x ? 1 : -1;
-    }
-
-    Vector2 start = transform.position;
-    Vector2 end = start + new Vector2 (xDirection, yDirection);
+  void Update () {
     if (!player.playerTurn) {
-      transform.position = end;
-      Debug.Log ("2Enemy Turn");
-      player.playerTurn = true;
+      attemptMove ();
     }
-
   }
 
   void attemptMove () {
 
+    if (!isMovable) {
+      player.playerTurn = true;
+
+    } else {
+      ChasePlayer ();
+    }
+
+  }
+
+  public void GetPlayerPosition (Vector2 target, bool isTrigger) {
+
+    playerPosition = target;
+    isMovable = isTrigger;
+
+  }
+
+  public void ChasePlayer () {
+
+    float xDirection = 0;
+    float yDirection = 0;
+
+    const float ENEMY_STRIDE = 1;
+
+    if (Mathf.Abs (playerPosition.x - transform.position.x) < float.Epsilon) {
+      yDirection = playerPosition.y > transform.position.y ? ENEMY_STRIDE : -ENEMY_STRIDE;
+    } else {
+      xDirection = playerPosition.x > transform.position.x ? ENEMY_STRIDE : -ENEMY_STRIDE;
+    }
+
+    Move (xDirection, yDirection);
+  }
+
+  void Move (float xDirection, float yDirection) {
+    Vector2 start = transform.position;
+    Vector2 end = start + new Vector2 (xDirection, yDirection);
+
+    BoxCollider2D boxCollider = GetComponent<BoxCollider2D> ();
+    boxCollider.enabled = false;
+
+    RaycastHit2D hit = Physics2D.Linecast (start, end);
+
+    boxCollider.enabled = true;
+
+    if (hit) {
+      player.playerTurn = true;
+    } else {
+      transform.position = end;
+      player.playerTurn = true;
+    }
   }
 
   RaycastHit2D getHitObject (Vector2 position) {

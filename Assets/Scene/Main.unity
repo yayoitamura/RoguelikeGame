@@ -1210,6 +1210,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8,
+        type: 2}
+      propertyPath: playerTurn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   m_IsPrefabParent: 0
@@ -2176,10 +2181,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 50597035645951982, guid: 79ae6f43e637646b7a334feb79f9abeb,
-        type: 2}
-      propertyPath: m_SleepingMode
-      value: 1
+    - target: {fileID: 1089818200650786, guid: 79ae6f43e637646b7a334feb79f9abeb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 79ae6f43e637646b7a334feb79f9abeb, type: 2}
