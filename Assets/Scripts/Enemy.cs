@@ -65,7 +65,6 @@ public class Enemy : MonoBehaviour {
     boxCollider.enabled = true;
     if (hit) {
       if (hit.transform.tag == "wall") {
-        Debug.Log ("wall hit  " + hit.transform.tag);
         player.playerTurn = true;
 
       } else if (hit.transform.tag == "player") {
