@@ -12,15 +12,9 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] GameObject title;
 	GameObject fade;
 	static int stage = 1;
-	int playerHp;
+	public static int playerHp = 5;
 	Text stageText;
 	Text Hp;
-
-	void Awake () {
-
-	}
-
-	void Start () { }
 
 	void Update () {
 
@@ -45,16 +39,12 @@ public class GameManager : MonoBehaviour {
 				//プレイ中
 				//ボタン操作○ プレイヤ○ 敵○
 				//プレイ開始→プレイ終了（死or階段）
-				playerHp = Player.getPlayerHp ();
-				Hp.text = "HP : " + playerHp;
-				Debug.Log (playerHp);
 				break;
 			case GameState.Game.END:
 				//ゲーム終了
 				//ボタン操作○ プレイヤ× 敵×
 				//ゲームオーバー/クリア画面
 				break;
-
 		}
 	}
 
@@ -69,13 +59,16 @@ public class GameManager : MonoBehaviour {
 		fade = GameObject.Find ("Fade");
 		dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
-		stageText.text = "stage : " + stage;
 		Hp = GameObject.Find ("Hp").GetComponent<Text> ();
+
+		stageText.text = "stage : " + stage;
 		Hp.text = "HP : " + playerHp;
 
 		SetFadeIn ();
 		dungeon.DungeonGenerate ();
 	}
+
+	//fade
 	void SetFadeIn () {
 		fade.SetActive (true);
 		fade.GetComponent<FadeControl> ().isFadeIn = true;
@@ -86,6 +79,15 @@ public class GameManager : MonoBehaviour {
 		fade.GetComponent<FadeControl> ().isFadeOut = true;
 	}
 
+	//ui
+
+	//status
+	public void UpdatePlayerHp (int getPlayerHp) {
+		playerHp = getPlayerHp;
+		Hp.text = "HP : " + playerHp;
+	}
+
+	//scene
 	public void LoadNextStage () {
 
 		const int nextStage = 0;
