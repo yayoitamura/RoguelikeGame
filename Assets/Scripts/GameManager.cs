@@ -7,10 +7,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	Dungeon dungeon;
+
+	//UI
 	[SerializeField] GameObject title;
 	GameObject fade;
 	static int stage = 1;
+	int playerHp;
 	Text stageText;
+	Text Hp;
 
 	void Awake () {
 
@@ -41,6 +45,9 @@ public class GameManager : MonoBehaviour {
 				//プレイ中
 				//ボタン操作○ プレイヤ○ 敵○
 				//プレイ開始→プレイ終了（死or階段）
+				playerHp = Player.getPlayerHp ();
+				Hp.text = "HP : " + playerHp;
+				Debug.Log (playerHp);
 				break;
 			case GameState.Game.END:
 				//ゲーム終了
@@ -63,6 +70,8 @@ public class GameManager : MonoBehaviour {
 		dungeon = GameObject.Find ("Dungeon").GetComponent<Dungeon> ();
 		stageText = GameObject.Find ("Stage").GetComponent<Text> ();
 		stageText.text = "stage : " + stage;
+		Hp = GameObject.Find ("Hp").GetComponent<Text> ();
+		Hp.text = "HP : " + playerHp;
 
 		SetFadeIn ();
 		dungeon.DungeonGenerate ();

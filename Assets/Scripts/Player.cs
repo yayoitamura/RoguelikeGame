@@ -12,7 +12,8 @@ public class Player : MonoBehaviour {
 	[SerializeField] private GameObject Damage;
 	[SerializeField] private GameObject item;
 	[SerializeField] private LayerMask layerMask;
-	int playerHp = 5;
+	// int playerHp = 5;
+	public static int playerHp = 5;
 
 	//Click
 	float longPressTime = 0.2f;
@@ -173,6 +174,18 @@ public class Player : MonoBehaviour {
 		Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
 		playerHp -= 1;
 
+		if (playerHp == 0) {
+			PlayerDie ();
+		}
+	}
+
+	void PlayerDie () {
+		Destroy (gameObject, 1f);
+		
+	}
+
+	public static int getPlayerHp () {
+		return playerHp;
 	}
 
 	void MoveScene (int sceneIndex) {
