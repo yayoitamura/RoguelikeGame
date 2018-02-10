@@ -34,10 +34,6 @@ public class Player : MonoBehaviour {
 	public AudioClip footsateps;
 
 	void Start () {
-
-		movePosition = transform.position;
-		itemPosition = new Vector2 (transform.position.x, transform.position.y + 1f);
-
 		cameraControl = GameObject.Find ("Main Camera").GetComponent<CameraControl> ();
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 
@@ -45,6 +41,11 @@ public class Player : MonoBehaviour {
 		PlayerAudio = GetComponent<AudioSource> ();
 
 		Hp = GameManager.playerHp;
+	}
+
+	public void PlayerSetUp () {
+		movePosition = transform.position;
+		itemPosition = new Vector2 (transform.position.x, transform.position.y + 1f);
 	}
 
 	/*
@@ -83,7 +84,6 @@ public class Player : MonoBehaviour {
 		} //方向転換後マスを勧められない時に出せない
 	}
 	public void PutItem () {
-
 		Ray itemRay = new Ray (itemPosition, transform.forward);
 		RaycastHit2D itemHit = Physics2D.Raycast ((Vector2) itemRay.origin, (Vector2) itemRay.direction);
 
@@ -176,13 +176,15 @@ public class Player : MonoBehaviour {
 		Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
 		Hp -= 1;
 		gameManager.UpdatePlayerHp (Hp);
-		if (Hp == 0) {
+		if (Hp <= 0) {
 			PlayerDie ();
 		}
 	}
 
 	void PlayerDie () {
-		Destroy (gameObject, 1f);
+		// Destroy (gameObject, 1f);
+
+		gameManager.LoadGameOver ();
 	}
 
 	void MoveScene (int sceneIndex) {
