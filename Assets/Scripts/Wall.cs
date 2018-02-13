@@ -5,7 +5,6 @@ using UnityEngine;
 public class Wall : MonoBehaviour {
 	public GameObject particlePrefab;
 	SpriteRenderer spriteRenderer;
-	public GameObject groundSprite;
 	public Sprite damegeSprite;
 
 	//Audio
@@ -23,7 +22,7 @@ public class Wall : MonoBehaviour {
 
 	public void wallDamage () {
 
-		spriteRenderer.sprite = damegeSprite;
+		// spriteRenderer.sprite = damegeSprite;
 		ParticleSystem particle = Instantiate (particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem> ();
 
 		WallAudio.PlayOneShot (breakWall, 1f);
@@ -32,7 +31,6 @@ public class Wall : MonoBehaviour {
 		Destroy (particle.gameObject, mainModule.duration);
 
 		Destroy (gameObject, 0.3f);
-		Instantiate (groundSprite, transform.position, Quaternion.identity);
 
 	}
 
