@@ -200,12 +200,14 @@ public class DungeonGenerator : MonoBehaviour {
 		// 1を2に変更する場所をランダムに決定する
 		int stepsPoint = UnityEngine.Random.Range (0, countNum1);
 		int enemysPoint = UnityEngine.Random.Range (0, countNum1);
+		int playerPoint = UnityEngine.Random.Range (0, countNum1);
 
 		if (stepsPoint == enemysPoint) {
 			enemysPoint = UnityEngine.Random.Range (0, countNum1);
 		}
 		int countForSteps = 0; // ↓のfor文内で1の場所をカウントするための変数
 		int countForEnemys = 0;
+		int countForplayer = 0;
 
 		// 1の場所を数えながらstairPointと一致した場所を2にする
 		for (var x = 0; x < map.GetLength (0); x++) {
@@ -213,12 +215,14 @@ public class DungeonGenerator : MonoBehaviour {
 				if (map[x, y] == 1) {
 					if (countForSteps == stepsPoint) {
 						map[x, y] = 2;
-					}
-					if (countForEnemys == enemysPoint) {
+					} else if (countForEnemys == enemysPoint) {
 						map[x, y] = 3;
+					} else if (countForplayer == playerPoint) {
+						map[x, y] = 4;
 					}
 					countForSteps++;
 					countForEnemys++;
+					countForplayer++;
 				}
 			}
 		}

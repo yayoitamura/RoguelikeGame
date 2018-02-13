@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d06036fe13c6e4375b1234e5e5ec235a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   Damage: {fileID: 1253859540579954, guid: 58a63a2c7e6bf4a3e8328ecade9d57e1, type: 2}
 --- !u!114 &114739398434772754
 MonoBehaviour:

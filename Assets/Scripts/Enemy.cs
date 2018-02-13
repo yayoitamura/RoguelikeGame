@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
   Vector2　 playerPosition;
   bool isMovable;
   int enemyHp = 10;
-  [SerializeField] private GameObject Damage;
+  [SerializeField] GameObject Damage;
 
   void Start () {
     player = GameObject.Find ("Man").GetComponent<Player> ();

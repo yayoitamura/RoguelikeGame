@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dungeon : MonoBehaviour {
+	DungeonGenerator generator;
 	[SerializeField] GameObject wallPrefab;
 	[SerializeField] GameObject floorPrefab;
-	[SerializeField] GameObject stepsPrefab; // 追加：階段プレファブ
+	[SerializeField] GameObject stepsPrefab;
 	[SerializeField] GameObject enemyPrefab;
+	[SerializeField] GameObject playerPrefab;
 	[SerializeField] Transform tileContainer;
-	DungeonGenerator generator;
-
 	[SerializeField] GameObject title;
-	GameObject enemys;
+
 	GameObject steps;
+	GameObject enemys;
+	GameObject player;
 	private enum MAP {
 		WALL,
 		FLOOR,
@@ -23,6 +25,7 @@ public class Dungeon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		generator = GameObject.Find ("DungeonGenerator").GetComponent<DungeonGenerator> ();
+		player = GameObject.Find ("Man");
 	}
 
 	// Update is called once per frame
@@ -56,6 +59,13 @@ public class Dungeon : MonoBehaviour {
 						enemys = Instantiate (enemyPrefab);
 						enemys.transform.SetParent (tileContainer);
 						enemys.transform.localPosition = new Vector2 (x, y);
+						break;
+					case (int) MAP.PLAYER:
+						tile = Instantiate (floorPrefab);
+						// player = Instantiate (playerPrefab);
+						// player.transform.SetParent (tileContainer);
+						// player.transform.localPosition = new Vector2 (x, y);
+						player.transform.position = transform.TransformPoint (new Vector2 (x, y));
 						break;
 					default:
 						break;
