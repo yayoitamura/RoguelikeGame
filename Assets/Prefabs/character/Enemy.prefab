@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61819060941778230}
   - component: {fileID: 50597035645951982}
   - component: {fileID: 114616483178775726}
+  - component: {fileID: 95577969728447896}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: enemy
@@ -135,8 +136,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.1851852, y: 1.1851852}
-    newSize: {x: 0.8888889, y: 0.8888889}
+    oldSize: {x: 0.88666666, y: 0.88666666}
+    newSize: {x: 1.33, y: 1.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -144,6 +145,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &95577969728447896
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1089818200650786}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3828e6c47012f4309a8720ec0788bb1a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114616483178775726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d06036fe13c6e4375b1234e5e5ec235a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 114502514434808962, guid: 89174ecf6979345adaca6dec59bf5ed8, type: 2}
   Damage: {fileID: 1253859540579954, guid: 58a63a2c7e6bf4a3e8328ecade9d57e1, type: 2}
 --- !u!114 &114739398434772754
 MonoBehaviour:
@@ -202,12 +219,12 @@ SpriteRenderer:
   m_SortingLayerID: 275247613
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 681506665dc96498f94f9aadcc332eab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6f90758590db4049b2f10fe37bbd215, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8888889, y: 0.8888889}
+  m_Size: {x: 1.33, y: 1.33}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
