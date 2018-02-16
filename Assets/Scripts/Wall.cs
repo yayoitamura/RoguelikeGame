@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour {
 	public GameObject particlePrefab;
-	SpriteRenderer spriteRenderer;
+	// SpriteRenderer spriteRenderer;
 	public Sprite damegeSprite;
 
 	//Audio
@@ -12,7 +12,7 @@ public class Wall : MonoBehaviour {
 	public AudioClip breakWall;
 
 	void Start () {
-		spriteRenderer = GetComponent<SpriteRenderer> ();
+		// spriteRenderer = GetComponent<SpriteRenderer> ();
 		WallAudio = GetComponent<AudioSource> ();
 	}
 

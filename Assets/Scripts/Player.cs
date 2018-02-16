@@ -23,7 +23,7 @@ public class Player : MonoBehaviour {
 	bool needMove = false;
 
 	//Move
-	string key;
+	string direction;
 	Vector2 movePosition;
 	const float ACTION_RANGE = 8.5f;
 	// Vector2 MOVE_RANGE = new Vector2 (8.5F, 8.5F);
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
 
 	//buttonからの入力
 	public void PushDown (string pushButton) {
-		key = pushButton;
+		direction = pushButton;
 		isPressing = true;
 		needMove = false;
 		waitTime = longPressTime;
@@ -95,9 +95,14 @@ public class Player : MonoBehaviour {
 
 	public void SetTargetPosition () {
 		const float PLAYER_STRIDE = 1f;
-		switch (key) {
+		switch (direction) {
 
 			case "left":
+
+				Vector2 inversion = gameObject.transform.localScale;
+				inversion.x = -1;
+				gameObject.transform.localScale = inversion;
+
 				movePosition.x = transform.position.x - PLAYER_STRIDE;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
@@ -108,6 +113,11 @@ public class Player : MonoBehaviour {
 				break;
 
 			case "right":
+
+				inversion = gameObject.transform.localScale;
+				inversion.x = 1;
+				gameObject.transform.localScale = inversion;
+
 				movePosition.x = transform.position.x + PLAYER_STRIDE;
 				movePosition.x = Mathf.Clamp (movePosition.x, -ACTION_RANGE, ACTION_RANGE);
 				break;
@@ -117,8 +127,8 @@ public class Player : MonoBehaviour {
 				movePosition.y = Mathf.Clamp (movePosition.y, -ACTION_RANGE, ACTION_RANGE);
 				break;
 		}
-		SetAnimationParam ();
-		// 当たったものの取得
+
+		// 前方確認
 		RaycastHit2D hit = getHitObject (movePosition);
 
 		Move (hit);
@@ -126,8 +136,8 @@ public class Player : MonoBehaviour {
 		cameraControl.Move ();
 	}
 
-	void SetAnimationParam () {
-		animator.Play (key);
+	void SetAnimationParam (string activity) {
+		animator.Play (activity);
 	}
 
 	RaycastHit2D getHitObject (Vector2 position) {
@@ -173,7 +183,10 @@ public class Player : MonoBehaviour {
 	}
 
 	public void ReceiveAttack () {
-		Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
+
+		// string activity = "PlayerDamage";
+		SetAnimationParam ("PlayerDamage");
+		// Destroy (Instantiate (Damage, transform.position, Quaternion.identity), 0.5f);
 		Hp -= 1;
 		gameManager.UpdatePlayerHp (Hp);
 		if (Hp <= 0) {
@@ -183,7 +196,7 @@ public class Player : MonoBehaviour {
 
 	void PlayerDie () {
 		// Destroy (gameObject, 1f);
-
+		SetAnimationParam ("PlayerDamage");
 		gameManager.LoadGameOver ();
 	}
 
