@@ -1167,7 +1167,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1493,20 +1493,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 212615977206135664, guid: ef4a6405955ff4353b3b44e846b38498,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 61248002689292634, guid: ef4a6405955ff4353b3b44e846b38498,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 61248002689292634, guid: ef4a6405955ff4353b3b44e846b38498,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 0.9
+    - target: {fileID: 1790571124953216, guid: ef4a6405955ff4353b3b44e846b38498, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef4a6405955ff4353b3b44e846b38498, type: 2}
@@ -2698,6 +2687,10 @@ Prefab:
     - target: {fileID: 4451042319390198, guid: 931e63ad08e0a4acb909c8d6288c9ef2, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669357385828108, guid: 931e63ad08e0a4acb909c8d6288c9ef2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 931e63ad08e0a4acb909c8d6288c9ef2, type: 2}
